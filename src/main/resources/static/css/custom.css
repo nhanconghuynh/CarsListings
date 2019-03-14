@@ -1,0 +1,15 @@
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:focus .nav-link,
+.navbar-custom .nav-item:hover .nav-link
+{
+    color: #ff3e52; !important;
+}
+
+
+.navbar-custom .dropdown-menu .dropdown-item:hover   {
+    background-color: rgba(174, 225, 241, 0.51);
+}
+
+.navbar-custom .dropdown-menu .dropdown-item:focus   {
+    background-color: #007BFF;
+}

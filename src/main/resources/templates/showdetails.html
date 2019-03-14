@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listing Details</title>
+</head>
+<body>
+<div th:if="${car.carphoto} != null">
+    <img th:src="${car.carphoto}" />
+    <hr />
+</div>
+
+Category: <span th:text="${car.category.type}" ></span><br />
+Manufacturer: <span th:text="${car.manufacturer}" ></span><br />
+Model: <span th:text="${car.carmodel}" ></span><br />
+Trim: <span th:text="${car.cartrim}" ></span><br />
+Year: <span th:text="${car.year}" ></span><br />
+Mileage: <span th:text="${car.mileage}" ></span><br />
+Color: <span th:text="${car.color}" ></span><br />
+Price: <span th:text="${car.price}" ></span><br />
+Description: <p th:text="${car.description}" ></p><br />
+
+
+<a th:href="@{/delete/{id}(id=${car.id})}">Delete this listing</a>
+
+<a href="/">Show All Listings</a><br />
+</body>
+</html>

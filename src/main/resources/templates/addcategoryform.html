@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Car Category Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/../resources/static/css/custom.css" type="text/css">
+</head>
+<body>
+<form action="#" th:action="@{/addcategoryprocess}" th:object="${category}" method="post">
+
+    <input type="hidden" th:field="*{id}" />
+
+    Enter category name: <textarea rows="3" th:field="*{type}" />
+    <span th:if="${#fields.hasErrors('type')}"
+          th:errors="*{type}"></span><br />
+
+    <input type="submit" value="Submit" />
+</form>
+</body>
+</html>
