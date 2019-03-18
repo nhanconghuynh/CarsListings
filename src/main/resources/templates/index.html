@@ -5,48 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Home</title>
 
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/../resources/static/css/custom.css">
+    <!--<link rel="stylesheet" href="/../resources/static/css/custom.css" type=text/css>-->
 
-   <!--<style>-->
-        <!--.navbar-custom .nav-item.active .nav-link,-->
-        <!--.navbar-custom .nav-item:focus .nav-link,-->
-        <!--.navbar-custom .nav-item:hover .nav-link-->
-        <!--{-->
-            <!--color: #ff3e52;-->
-        <!--}-->
-<!---->
-<!---->
-        <!--.navbar-custom .dropdown-menu .dropdown-item:hover   {-->
-            <!--background-color: rgba(174, 225, 241, 0.51);-->
-        <!--}-->
-<!---->
-        <!--.navbar-custom .dropdown-menu .dropdown-item:focus   {-->
-            <!--background-color: #007BFF;-->
-        <!--}-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-<!---->
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="-->
+            <!--crossorigin="anonymous"></script>-->
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+
+
+
+   <style>
+        .navbar-custom .nav-item.active .nav-link,
+        .navbar-custom .nav-item:focus .nav-link,
+        .navbar-custom .nav-item:hover .nav-link
+        {
+            color: #ff3e52;
+        }
+
+        .navbar-custom .dropdown-menu .dropdown-item:hover   {
+            background-color: rgba(174, 225, 241, 0.51);
+        }
+
+        .navbar-custom .dropdown-menu .dropdown-item:focus   {
+            background-color: #007BFF;-->
+        }
+
+        /*.navbar-custom .navbar-text {*/
+            /*font-weight:bold;*/
+
+        /*}*/
+
+        /*body {*/
+            /*font-size: 116%;*/
+            /*padding: 9px;*/
+        /*}*/
         <!--/* and this styles the dropdown trigger link, when open */-->
         <!--/*.navbar-custom .dropdown.show a {*/-->
             <!--/*background-color: #BADA55;*/-->
         <!--/*}*/-->
 
-        <!--/*.navbar-custom .navbar-toggle:hover,*/-->
         <!--/*.navbar-custom .navbar-toggle:focus {*/-->
         <!--/*background-color: #378dff;*/-->
         <!--/*}*/-->
-<!---->
-    <!--/*</style>*/-->
+    </style>
+
+    <script>
+        function openShowDetails(id) {
+            $.ajax({
+                url: "/details/" + id,
+                success: function(response) {
+                console.log(response);
+                $('#showdetails').html(response);
+                $('#showdetailsModal').modal();
+                $('#showdetailsModal').modal('open');
+                }
+            });
+        }
+    </script>
+
 </head>
 <body>
 
+
+
 <div th:replace="base :: navlinks"></div>
+
 <div th:if="${addsuccess}">
-    <h7 style="color: red" th:text="${addsuccess}"> </h7>
-    <b><h7 style="color: red" th:text="${carinfo}"> </h7></b>
+    <h8 style="color: green" th:text="${addsuccess}"> </h8>
+    <h7 style="color: red" th:text="${info}"> </h7>
 </div><hr />
 
-<h2>All Car Categories and Listings </h2>
+
+
+<h2 style="text-align:center;"> All Car Categories and Listings </h2>
 <br /> <hr /> <br />
 
 <!--<div class = "container">-->
@@ -64,31 +100,41 @@
         <div class="card" style="width: 20rem; text-align:center;display:inline-block;">
           <div class="shadow p-3 mb-1 bg-white rounded">
             <div class="view overlay">
-                <a th:href="@{/details/{id}(id=${car.id})}">
+                <a data-toggle="modal" data-target="#myModal" th:href="@{/details/{id}(id=${car.id})}" >
                 <img class="card-img-top" th:src="${car.carphoto}" alt="No pic available.  Please add pic."
-                     height="200" style="border-radius:.60rem;">
+                      style="border-radius:.60rem; max-width:100%;height:190px;width:auto;">
                     <div class="mask rgba-white-slight"></div>
                 </a>
             </div>
-              <div class="card-block">
-                <h5 class="card-title">[[${car.year}]] [[${car.manufacturer}]] [[${car.carmodel}]] [[${car.cartrim}]] </h5>
-                   <h6 class="card-subtitle mb-2">Only $[[${#numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}]] !!! </h6>
-                    <h6 class="card-subtitle mb-2 text-muted">[[${car.mileage}]] miles</h6>
+              <div class="card-body">
+                <h5 class="card-title mb-3 text-center">[[${car.year}]] [[${car.manufacturer}]] [[${car.carmodel}]] [[${car.cartrim}]] </h5>
+                   <h6 class="card-subtitle mb-3 text-center">Only $[[${#numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}]] !!! </h6>
+                    <h6 class="card-subtitle mb-2 text-muted text-center">[[${car.mileage}]] miles</h6>
                     <p class="card-text">[[${car.description}]]</p>
                     <a class="btn btn-primary btn-sm" role="button" th:href="@{/update/{id}(id=${car.id})}">Update</a>
-                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/details/{id}(id=${car.id})}">Details</a>
-                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
+                    <!--<button type="button" class="btn btn-primary btn-sm" th:onclick="'javascript:openShowDetails(\'' + ${car.id} +'\');'">Details</button>-->
+                  <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#myModal" th:href="@{/details/{id}(id=${car.id})}">Details</a>
+                  <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
               </div>
             </div>
           </div>
     </th:block> <br />  <hr /> <br />
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
 
     <div th:replace="base :: footer"></div>
     <!-- Bootstrap core JavaScript-->
    <!--jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

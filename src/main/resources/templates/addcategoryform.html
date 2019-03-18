@@ -3,19 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Car Category Form</title>
+
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/../resources/static/css/custom.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <style>
+        .navbar-custom .nav-item.active .nav-link,
+        .navbar-custom .nav-item:focus .nav-link,
+        .navbar-custom .nav-item:hover .nav-link
+        {
+            color: #ff3e52;
+        }
+
+        .navbar-custom .dropdown-menu .dropdown-item:hover   {
+            background-color: rgba(174, 225, 241, 0.51);
+        }
+
+        .navbar-custom .dropdown-menu .dropdown-item:focus   {
+            background-color: #007BFF;-->
+        }
+        span.form-error-text { color: red; }
+
+    </style>
+    <!--<script>-->
+        <!--function openmodal(id){-->
+            <!--var id=id;-->
+            <!--var other="<a onclick='openmodal(1)' style='cursor:pointer'>product 1</a><a onclick='openmodal(2)' style='cursor:pointer'>product 2</a><a onclick='openmodal(3)' style='cursor:pointer' >product 3</a>";-->
+            <!--$('#item_modal').fadeOut("slow",function(){-->
+                <!--$(this).modal('hide')-->
+            <!--}).fadeIn("slow",function(){-->
+                <!--$("#target_title").text(id);-->
+                <!--$("#target_other").html(other);-->
+                <!--$(this).modal('show')-->
+            <!--});-->
+        <!--}</script> -->
+
 </head>
 <body>
+
+<div class="modal-header" >
+
+    <h6 class="modal-title">Add New Category</h6>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+<div class="modal-body">
 <form action="#" th:action="@{/addcategoryprocess}" th:object="${category}" method="post">
 
     <input type="hidden" th:field="*{id}" />
 
-    Enter category name: <textarea rows="3" th:field="*{type}" />
-    <span th:if="${#fields.hasErrors('type')}"
-          th:errors="*{type}"></span><br />
+        Enter category name: <input type="text" th:field="*{type}" size="45" th:errorclass="form-field-error"/>
+    <span class="text text-danger" th:if="${#fields.hasAnyErrors()}">
+        <p th:each="err : ${#fields.allErrors()}" th:text="${err}">...</p>
+    </span>
+    <hr style="height:1px; visibility:hidden; margin-bottom: 0px;" />
 
-    <input type="submit" value="Submit" />
+        <!--<span class="form-error-text" th:if="${#fields.hasErrors('type')}"-->
+              <!--th:errors="*{type}"></span><br /> <br />-->
+
+        <input type="submit" class="btn btn-primary" value="Submit" />
 </form>
+</div>
+
+
 </body>
 </html>

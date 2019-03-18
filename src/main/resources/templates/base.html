@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
 
 </head>
-<div>
+<body>
+
+
+
   <div th:fragment="navlinks">
     <header>
+
     <nav class="navbar navbar-expand navbar-custom flex-lg-row">
         <!--<a href="#" class="navbar-left"><img src="../static/img/motor-logo-graphic-design-logo-sticker-label-arm-ideal-to-be-used-as-team-59196935.jpg"></a>-->
         <a class="navbar-brand" href="/"><img src="https://res.cloudinary.com/dg89xpg9o/image/upload/v1552467251/Challenge6_CarsListing/logo.png" alt="" height="65px" width="65px">
@@ -30,10 +35,12 @@
                         Category
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/addcategory">Add a Category</a>
-                        <a class="dropdown-item" href="#">View a List of All Categories</a>
+                        <a class="dropdown-item"  data-toggle="modal" data-target="#myModal" href="/addcategory" >Add a Category</a>
+
+                        <a class="dropdown-item" href="#">Delete a Category</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">View All Current Listings under A Category</a>
+                        <a class="dropdown-item" href="#">View a List of All Categories</a>
                     </div>
                 </li>
 
@@ -44,7 +51,9 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="/add">Add a new Car Listing</a>
-                        <a class="dropdown-item" href="#">List cars that were recently Added</a>
+                        <a class="dropdown-item" href="#">List  all cars that were recently Added</a>
+                        <a class="dropdown-item" href="#">List all cars that were recently Remove</a>
+                        <a class="dropdown-item" href="#">List cars that were recently Modified</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/">View all Available Car Listings</a>
                     </div>
@@ -64,10 +73,16 @@
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
+
+
+
         </div>
     </nav>
-</header>
+   </header>
+
   </div>
+
+
 
     <div th:fragment="footer">
 
@@ -75,12 +90,5 @@
 
     </div>
 
-</div>
-
-    <!-- Bootstrap core JavaScript-->
-    <!--jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -78,7 +78,7 @@ public class HomeController {
             redirectAttributes.addFlashAttribute("addsuccess",
                     "You have successfully uploaded '" + file.getOriginalFilename() + "'" +
                         " and added a car listing for a ");
-           redirectAttributes.addFlashAttribute("carinfo",car.getCategory().getType() +
+           redirectAttributes.addFlashAttribute("info",car.getCategory().getType() +
                         " " + car.getYear()+ " " + car.getManufacturer() +
                         " " + car.getCarmodel() + " " + car.getCartrim() + ".");
         }
@@ -98,15 +98,20 @@ public class HomeController {
     }
 
      @PostMapping("/addcategoryprocess")
-    public String processForm(@Valid @ModelAttribute("category") Category category, BindingResult result) {
+    public String processForm(@Valid @ModelAttribute("category") Category category, BindingResult result,
+                              RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "addcategoryform";
         }
 
-        List<Category> categories = new ArrayList<>();
-        categoryRepository.findAll().forEach(categories::add);
-        category.setIdnum(categories.size()+1);
+//        List<Category> categories = new ArrayList<>();
+//        categoryRepository.findAll().forEach(categories::add);
+//        category.setIdnum(categories.size()+1);
+        category.setIdnum((int)categoryRepository.count()+1);
         categoryRepository.save(category);
+         redirectAttributes.addFlashAttribute("addsuccess",
+                 "You have successfully added a new car category named ");
+         redirectAttributes.addFlashAttribute("info", "'" + category.getType() +"'.");
         return "redirect:/";
     }
 
