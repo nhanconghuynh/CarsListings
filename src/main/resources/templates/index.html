@@ -205,7 +205,7 @@
                 <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#modifyCarModal" th:href="@{/update/{id}(id=${car.id})}">Update</a>
                 <!--<button type="button" class="btn btn-primary btn-sm" th:onclick="'javascript:openShowDetails(\'' + ${car.id} +'\');'">Details</button>-->
                 <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}">Details</a>
-                <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
+                <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#deleteCarModal" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
 
             </div>
         </div>
@@ -240,10 +240,10 @@
                     <p class="card-text">[[${car.description}]]</p>
 
 
-                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/update/{id}(id=${car.id})}">Update</a>
+                    <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#modifyCarModal" th:href="@{/update/{id}(id=${car.id})}">Update</a>
                     <!--<button type="button" class="btn btn-primary btn-sm" th:onclick="'javascript:openShowDetails(\'' + ${car.id} +'\');'">Details</button>-->
                     <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}">Details</a>
-                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
+                    <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#deleteCarModal" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
 
                 </div>
             </div>
@@ -297,7 +297,10 @@
                     <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#modifyCarModal" th:href="@{/update/{id}(id=${car.id})}">Update</a>
                     <!--<button type="button" class="btn btn-primary btn-sm" th:onclick="'javascript:openShowDetails(\'' + ${car.id} +'\');'">Details</button>-->
                     <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}">Details</a>
-                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
+                   <!--<a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>-->
+
+                  <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#deleteCarModal" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
+                    <!--<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteCarModal">Delete</button>-->
 
                 </div>
             </div>

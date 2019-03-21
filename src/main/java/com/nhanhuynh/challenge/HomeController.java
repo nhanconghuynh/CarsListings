@@ -37,6 +37,9 @@ public class HomeController {
         for(Category cat: categoryRepository.findAll()) {
             if ((cat.getIdnum() != 1) && (!cat.getCars().isEmpty()) )
                 categoryRepository.findById(cat.getId()).get().setHascar(true);
+            else if ( (cat.getIdnum() != 1) && (cat.getCars().isEmpty()) ) {
+                cat.setHascar(false);
+            }
 
             if ((cat.getIdnum() == 1) && (cat.getCars().isEmpty())) {
                 model.addAttribute("recentcarsremoved", "There are currently no recently removed car listings.");
@@ -230,7 +233,13 @@ public class HomeController {
 
 
     @RequestMapping("/delete/{id}")
-    public String deleteCar(@PathVariable("id") long id, RedirectAttributes redirectAttributes ){
+    public String deleteCar(@PathVariable("id") long id , Model model){
+        model.addAttribute("car", carRepository.findById(id).get());
+        return "deleteconfirmation";
+    }
+
+    @RequestMapping("/deleteconfirm/{id}")
+    public String deleteCarProcess(@PathVariable("id") long id, RedirectAttributes redirectAttributes ){
         Car car = carRepository.findById(id).get();
         Category category = car.getCategory();
 

@@ -25,6 +25,14 @@
         span.form-error-text { color: red; }
         body { font-size: 116%;}
     </style>
+
+    <script>
+        $(function() {
+            $('#closemodal').click(function() {
+                $('#modalwindow').modal('hide');
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -47,14 +55,15 @@
             <b>Color:</b> <span class="float-right" th:text="${car.color}" ></span><br />
             <b>Price:</b> <span class="float-right" >$[[${#numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}]]</span><br />
             <b>Short Description:</b><br /> <span th:text="${car.description}" ></span><br />
-            <b>Features:</b><br /> <p th:text="${car.features}" ></p><br />
+            <b>Features:</b><br /> <p th:text="${car.features}" ></p>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                <a class="btn btn-warning btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete this listing</a>
+                <a class="btn btn-warning btn-sm" role="button" data-toggle="modal" data-target="#deleteCarModal" th:href="@{/delete/{id}(id=${car.id})}" >Delete this listing</a>
             </div>
         </div>
 
 
+            <div th:replace="base :: modal"></div>
 </body>
 </html>
