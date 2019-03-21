@@ -20,90 +20,114 @@ public class Category {
     @Size(min=2)
     private String type;
 
+    boolean hascar;
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Car> cars;
 
     public Category() {
         this.cars = new HashSet<Car>();
+        this.hascar = false;
     }
 
     public Category(int idnum) {
 
         switch (idnum) {
             case 1:
+                this.type = "Recently Deleted Car Listings";
+                this.cars = new HashSet<Car>();
+                this.idnum = idnum;
+                this.hascar = false;
+                break;
+            case 2:
                 this.type = "SubCompact and Compact";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 2:
+            case 3:
                 this.type = "Midsize";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
               break;
-            case 3:
+            case 4:
                 this.type = "Full";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 4:
+            case 5:
                 this.type = "Crossover SUV";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 5:
+            case 6:
                 this.type = "Midsize SUV";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 6:
+            case 7:
                 this.type = "Fullsize SUV";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 7:
+            case 8:
                 this.type = "Midsize Pickup Truck";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 8:
+            case 9:
                 this.type = "Fullsize Pickup Truck";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 9:
+            case 10:
                 this.type = "Minivan";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 10:
+            case 11:
                 this.type = "Van";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 11:
+            case 12:
                 this.type = "Midsize Luxury";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 12:
+            case 13:
                 this.type = "Fullsize Luxury";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 13:
+            case 14:
                 this.type = "Midsize Luxury SUV";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 14:
+            case 15:
                 this.type = "Fullsize Luxury SUV";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
-            case 15:
+            case 16:
                 this.type = "Racers, Sports, and Convertibles";
                 this.cars = new HashSet<Car>();
                 this.idnum = idnum;
+                this.hascar = false;
                 break;
         }
     }
@@ -140,5 +164,13 @@ public class Category {
 
     public void setIdnum(int idnum) {
         this.idnum = idnum;
+    }
+
+    public boolean isHascar() {
+        return hascar;
+    }
+
+    public void setHascar(boolean hascar) {
+        this.hascar = hascar;
     }
 }

@@ -34,9 +34,28 @@ public class HomeController {
     @RequestMapping("/")
     public String index(Model model){
 
-        //Grab all car categories from database and send them to template
+        for(Category cat: categoryRepository.findAll()) {
+            if ((cat.getIdnum() != 1) && (!cat.getCars().isEmpty()) )
+                categoryRepository.findById(cat.getId()).get().setHascar(true);
+
+            if ((cat.getIdnum() == 1) && (cat.getCars().isEmpty())) {
+                model.addAttribute("recentcarsremoved", "There are currently no recently removed car listings.");
+                cat.setHascar(true);
+            }
+        }
+       List<Car> carlist = new ArrayList<>();
+
+        for(Car car: carRepository.findAll()) {
+            if (car.isRecentadd())
+                carlist.add(car);
+        }
+
+        if (carlist.isEmpty())
+            model.addAttribute("recentcarsaddedmsg", "There are currently no recently added car listing.");
+        else
+            model.addAttribute("recentcarsadded", carlist);
+
         model.addAttribute("categories", categoryRepository.findAll());
-//        model.addAttribute("cars", carRepository.findAll());
 
         return "index";
     }
@@ -73,14 +92,17 @@ public class HomeController {
             car.setCarphoto(uploadResult.get("url").toString());
 
             Category category = car.getCategory();
+            car.setRecentadd(true);
             categoryRepository.findById(category.getId()).get().getCars().add(car);
             categoryRepository.save(categoryRepository.findById(category.getId()).get());
+
             redirectAttributes.addFlashAttribute("addsuccess",
                     "You have successfully uploaded '" + file.getOriginalFilename() + "'" +
                         " and added a car listing for a ");
            redirectAttributes.addFlashAttribute("info",car.getCategory().getType() +
                         " " + car.getYear()+ " " + car.getManufacturer() +
                         " " + car.getCarmodel() + " " + car.getCartrim() + ".");
+
         }
         catch (IOException e){
             e.printStackTrace();
@@ -107,6 +129,7 @@ public class HomeController {
 //        List<Category> categories = new ArrayList<>();
 //        categoryRepository.findAll().forEach(categories::add);
 //        category.setIdnum(categories.size()+1);
+
         category.setIdnum((int)categoryRepository.count()+1);
         categoryRepository.save(category);
          redirectAttributes.addFlashAttribute("addsuccess",
@@ -114,6 +137,34 @@ public class HomeController {
          redirectAttributes.addFlashAttribute("info", "'" + category.getType() +"'.");
         return "redirect:/";
     }
+
+    @GetMapping("/deletecategory")
+    public String deleteCategoryForm(Model model){
+        model.addAttribute("car", new Car());
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "deletecategoryform :: deletecategoryModal";
+    }
+
+    @PostMapping("/deletecategoryprocess")
+    public String deletecategoryprocessForm(Car car, Model model, RedirectAttributes redirectAttributes) {
+        Car carset = new Car();
+        Category category = car.getCategory();
+        // clear all cars in category
+        for(Iterator<Car> i = categoryRepository.findById(category.getId()).get().getCars().iterator(); i.hasNext();) {
+            carset = i.next();
+            i.remove();
+            carRepository.delete(carset);
+        }
+            //categoryRepository.findById(category.getId()).get().getCars().remove(element);
+
+
+        redirectAttributes.addFlashAttribute("addsuccess",
+                "You have successfully delete the category named ");
+        redirectAttributes.addFlashAttribute("info", "'" + category.getType() +"'.");
+        categoryRepository.deleteById(category.getId());
+        return "redirect:/";
+    }
+
 
     @RequestMapping("/details/{id}")
     public String showCar(@PathVariable("id") long id, Model model) {
@@ -169,12 +220,26 @@ public class HomeController {
 
 
     @RequestMapping("/delete/{id}")
-    public String deleteCar(@PathVariable("id") long id){
+    public String deleteCar(@PathVariable("id") long id, RedirectAttributes redirectAttributes ){
         Car car = carRepository.findById(id).get();
         Category category = car.getCategory();
+
         categoryRepository.findById(category.getId()).get().getCars().remove(car);
+
+
+        categoryRepository.findById(category.getId()).get().getCars().remove(car);
+
         categoryRepository.save( categoryRepository.findById(category.getId()).get());
+
+        redirectAttributes.addFlashAttribute("addsuccess",
+                "You have successfully deleted a ");
+        redirectAttributes.addFlashAttribute("info",car.getCategory().getType() +
+                " " + car.getYear()+ " " + car.getManufacturer() +
+                " " + car.getCarmodel() + " " + car.getCartrim() + ".");
+
         carRepository.deleteById(id);
+
+
         return "redirect:/";
     }
 

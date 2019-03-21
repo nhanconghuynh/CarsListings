@@ -9,6 +9,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
     <style>
+
+        .navbar-nav {
+            line-height:15px;
+        }
+
     .navbar-custom .nav-item.active .nav-link,
     .navbar-custom .nav-item:focus .nav-link,
     .navbar-custom .nav-item:hover .nav-link
@@ -24,81 +29,99 @@
         background-color: #007BFF;-->
     }
     span.form-error-text { color: red; }
+    body { font-size: 116%;}
+        form  { display: table;  margin: 0 auto;   }
+        p     { display: table-row;  }
+        label { display: table-cell; font-weight: bold; }
+        input { display: table-cell;}
 </style>
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
 
 <form action="#" th:action="@{/addprocess}" th:object="${car}" method="post"
-      enctype="multipart/form-data">
+      enctype="multipart/form-data" style="font-size:85%;" >
 
     <input type="hidden" th:field="*{id}" />
 
-    Car Photo <input type="file" name="file" /><br />
+    <p>
+    <label>Car Photo:</label> <input type="file" name="file" /><br />
     <span  th:if="${message}">
         <h6 style="color: red" th:text="${message}"> </h6>
-    </span> <br />
+    </span>
+    </p>
 
-    Category: <select th:field="*{category}" >
+    <p>
+        <label>Category:</label> <select th:field="*{category}" >
 
-    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
+    <option th:unless="${category.idnum == 1}" th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
     </option>
 
-    <!--<option th:value="1" th:text="Compact"></option>-->
-    <!--<option th:value="2" th:text="Midsize"></option>-->
-    <!--<option th:value="3"   th:text="Full"></option>-->
-    <!--<option th:value="4" th:text="Crossover+' '+SUV"></option>-->
-    <!--<option th:value="5" th:text="Mid-size+' '+SUV"></option>-->
-    <!--<option th:value="6" th:text="Full-size+' '+SUV"></option>-->
-    <!--<option th:value="7" th:text="Mid-size+' '+Pick-up+' '+Truck"></option>-->
-    <!--<option th:value="8" th:text="Full-size+' '+Pick-up+' '+Truck"></option>-->
-    <!--<option th:value="9" th:text="Minivan"></option>-->
-    <!--<option th:value="10" th:text="Van"></option>-->
-    <!--<option th:value="11" th:text="Mid-size+' '+Luxury"></option>-->
-    <!--<option th:value="12" th:text="Full-size+' '+Luxury"></option>-->
-    </select><br /><br />
+    </select>
+    </p>
 
-    Manufacturer: <input type="text" th:field="*{manufacturer}" th:errorclass="form-field-error" />
+    <br />
+
+    <p>
+
+    <label>Manufacturer:  </label><input type="text" th:field="*{manufacturer}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('manufacturer')}"
-          th:errors="*{manufacturer}"></span><br /><br />
+          th:errors="*{manufacturer}"></span>
+    </p><br />
 
-    Model: <input type="text" th:field="*{carmodel}" th:errorclass="form-field-error" />
+    <p>
+    <label>Model:</label> <input type="text" th:field="*{carmodel}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('carmodel')}"
-          th:errors="*{carmodel}"></span><br /><br />
+          th:errors="*{carmodel}"></span></p><br />
 
-    Trim: <input type="text" th:field="*{cartrim}" th:errorclass="form-field-error" />
+    <p>
+    <label>Trim:</label> <input type="text" th:field="*{cartrim}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('cartrim')}"
-          th:errors="*{carTrim}"></span><br /><br />
+          th:errors="*{carTrim}"></span></p><br />
 
-    Year: <input type="text" th:field="*{year}" th:errorclass="form-field-error" />
+    <p>
+    <label>Year:</label> <input type="text" th:field="*{year}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('year')}"
-          th:errors="*{year}"></span><br /><br />
+          th:errors="*{year}"></span></p><br />
 
-    Mileage: <input type="text" th:field="*{mileage}" th:errorclass="form-field-error" />
+    <p>
+    <label>Mileage:</label> <input type="text" th:field="*{mileage}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('mileage')}"
-          th:errors="*{mileage}"></span><br /><br />
+          th:errors="*{mileage}"></span></p><br />
 
-    Color: <input type="text" th:field="*{color}" th:errorclass="form-field-error" />
+    <p>
+    <label>Color:</label> <input type="text" th:field="*{color}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('color')}"
-          th:errors="*{color}"></span><br /><br />
+          th:errors="*{color}"></span></p><br />
 
-    Listing Price: <input type="number" th:field="*{price}"
-                          placeholder="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$"
+    <p>
+    <label>Listing Price:</label> <input type="number" th:field="*{price}"
+                          placeholder="0.00" min="0.01" step="0.01" pattern="^\d+(?:\.\d{2,2})?$"
                           th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('price')}"
-          th:errors="*{price}"></span><br /><br />
+          th:errors="*{price}"></span></p><br />
 
-    Short Description: <textarea rows="2" th:field="*{description}" th:errorclass="form-field-error" />
+    <p>
+    <label>Short Description:  &nbsp;  </label> <textarea rows=1 style="height:auto; width:100%;" th:field="*{description}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('description')}"
-          th:errors="*{description}"></span><br /><br />
+          th:errors="*{description}"></span></p><br />
 
-    Features: <textarea rows="5" th:field="*{features}" th:errorclass="form-field-error" />
+    <p>
+    <label>Features:</label> <textarea rows=2 style="height:auto; width:100%;" th:field="*{features}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('features')}"
-          th:errors="*{features}"></span><br /><br />
+          th:errors="*{features}"></span></p><br />
 
-    <input type="submit" value="Submit" />
+    <p></p> <label></label>
+    <span style="display:inline-block;">
+    &nbsp;
+    <input class="btn btn-light"   style="text-align: center; margin: auto; width:100px" type="reset" value="Reset" /> &nbsp; &nbsp; &nbsp;
+    <input class="btn btn-primary" style="text-align: center; margin: auto; width:100px"  type="submit" value="Submit" />
+    </span>
+
 </form>
+<br /> <hr />
 
+    <div th:replace="base :: modal"></div>
     <div th:replace="base :: footer"></div>
     <!-- Bootstrap core JavaScript-->
     <!--jQuery first, then Popper.js, then Bootstrap JS -->

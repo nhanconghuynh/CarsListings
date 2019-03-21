@@ -12,6 +12,14 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    private boolean recentadd;
+
+    private boolean recentremove;
+
+    private boolean recentmodified;
+
+    private String categorytype;
+
     @Size(min=3)
     private String manufacturer;
 
@@ -46,6 +54,12 @@ public class Car {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public Car() {
+        this.recentadd = false;
+        this.recentmodified = false;
+        this.recentremove = false;
+    }
 
     public long getId() {
         return id;
@@ -137,6 +151,38 @@ public class Car {
 
     public void setCarphoto(String carphoto) {
         this.carphoto = carphoto;
+    }
+
+    public boolean isRecentadd() {
+        return recentadd;
+    }
+
+    public void setRecentadd(boolean recentadd) {
+        this.recentadd = recentadd;
+    }
+
+    public boolean isRecentremove() {
+        return recentremove;
+    }
+
+    public void setRecentremove(boolean recentremove) {
+        this.recentremove = recentremove;
+    }
+
+    public boolean isRecentmodified() {
+        return recentmodified;
+    }
+
+    public void setRecentmodified(boolean recentmodified) {
+        this.recentmodified = recentmodified;
+    }
+
+    public String getCategorytype() {
+        return categorytype;
+    }
+
+    public void setCategorytype(String categorytype) {
+        this.categorytype = categorytype;
     }
 }
 

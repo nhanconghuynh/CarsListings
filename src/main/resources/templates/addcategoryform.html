@@ -26,7 +26,7 @@
             background-color: #007BFF;-->
         }
         span.form-error-text { color: red; }
-
+        body { font-size: 116%;}
     </style>
     <!--<script>-->
         <!--function openmodal(id){-->
@@ -44,17 +44,17 @@
 </head>
 <body>
 
-<div class="modal-header" >
+<div class="modal-header" th:fragment="addcategoryModal">
 
     <h6 class="modal-title">Add New Category</h6>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 </div>
-<div class="modal-body">
+<div class="modal-body" style="font-size:100%">
 <form action="#" th:action="@{/addcategoryprocess}" th:object="${category}" method="post">
 
     <input type="hidden" th:field="*{id}" />
 
-        Enter category name: <input type="text" th:field="*{type}" size="45" th:errorclass="form-field-error"/>
+        Enter category name: <input type="text" th:field="*{type}" size="48" th:errorclass="form-field-error"/>
     <span class="text text-danger" th:if="${#fields.hasAnyErrors()}">
         <p th:each="err : ${#fields.allErrors()}" th:text="${err}">...</p>
     </span>
@@ -66,7 +66,6 @@
         <input type="submit" class="btn btn-primary" value="Submit" />
 </form>
 </div>
-
 
 </body>
 </html>

@@ -22,8 +22,11 @@ public class DataLoader implements CommandLineRunner {
 //        int size = entities.size();
 
         Category category = new Category(1);
+        categoryRepository.save(category);
 
+        category = new Category(2);
         Car car = new Car();
+        car.setCategorytype(category.getType());
         car.setCarphoto("https://res.cloudinary.com/dg89xpg9o/image/upload/v1552459268/Challenge6_CarsListing/MCR12A.jpg");
         car.setManufacturer("Toyota");
         car.setCarmodel("Corolla");
@@ -33,12 +36,15 @@ public class DataLoader implements CommandLineRunner {
         car.setColor("White");
         car.setPrice(10500.00);
         car.setDescription("Very reliable car.");
+        car.setFeatures("Has all basic options. A/C.  Automatic windows. FWD.");
 
         category.getCars().add(car);
+        category.setHascar(true);
         car.setCategory(category);
 
 
         car = new Car();
+        car.setCategorytype(category.getType());
         car.setCarphoto("https://res.cloudinary.com/dg89xpg9o/image/upload/v1552459523/Challenge6_CarsListing/2015-honda-civic-review-images-autonation-12_th-e1419262774692.jpg");
         car.setManufacturer("Honda");
         car.setCarmodel("Civic");
@@ -48,11 +54,14 @@ public class DataLoader implements CommandLineRunner {
         car.setColor("Maroon");
         car.setPrice(30500.00);
         car.setDescription("Nice car. Great value.");
+        car.setFeatures("Has all nice features. Bluetooth. A/C.  Automatic windows. FWD.");
 
         category.getCars().add(car);
         car.setCategory(category);
 
         car = new Car();
+        car.setCategorytype(category.getType());
+
         car.setCarphoto("https://res.cloudinary.com/dg89xpg9o/image/upload/v1552460285/Challenge6_CarsListing/2017-kia-rio-FUNctional.jpg");
         car.setManufacturer("Kia");
         car.setCarmodel("Rio");
@@ -62,11 +71,13 @@ public class DataLoader implements CommandLineRunner {
         car.setColor("Dark Green");
         car.setPrice(10000.00);
         car.setDescription("Has all the options.");
+        car.setFeatures("Fully loaded. Bluetooth. A/C.  Automatic windows. FWD. 16\" wheels.");
 
         category.getCars().add(car);
         car.setCategory(category);
 
         car = new Car();
+        car.setCategorytype(category.getType());
         car.setCarphoto("https://res.cloudinary.com/dg89xpg9o/image/upload/v1552463525/Challenge6_CarsListing/open-19.jpg");
         car.setManufacturer("Ford");
         car.setCarmodel("Fiesta");
@@ -76,11 +87,13 @@ public class DataLoader implements CommandLineRunner {
         car.setColor("Orange");
         car.setPrice(13000.00);
         car.setDescription("Great car. Fully loaded.");
+        car.setFeatures("Fully loaded. Bluetooth. A/M F/M Stereo. Navigation. A/C.  Automatic windows. FWD. 16\" wheels.");
 
         category.getCars().add(car);
         car.setCategory(category);
 
         car = new Car();
+        car.setCategorytype(category.getType());
         car.setCarphoto("https://res.cloudinary.com/dg89xpg9o/image/upload/v1552460609/Challenge6_CarsListing/71IvbqyTkAL._UY560_.jpg");
         car.setManufacturer("MINI");
         car.setCarmodel("Cooper");
@@ -90,6 +103,7 @@ public class DataLoader implements CommandLineRunner {
         car.setColor("Green");
         car.setPrice(23000.00);
         car.setDescription("A classic.");
+        car.setFeatures("Classic with GPS Navigation.");
 
         category.getCars().add(car);
 
@@ -99,9 +113,10 @@ public class DataLoader implements CommandLineRunner {
 //        category.setIdnum()
         categoryRepository.save(category);
 
-        category = new Category(2);
+        category = new Category(3);
 
         car = new Car();
+        car.setCategorytype(category.getType());
         car.setCarphoto("https://res.cloudinary.com/dg89xpg9o/image/upload/v1552459523/Challenge6_CarsListing/2015-Toyota-Camry-XSE-front-three-quarters-07.jpg");
         car.setManufacturer("Toyota");
         car.setCarmodel("Camry");
@@ -111,8 +126,11 @@ public class DataLoader implements CommandLineRunner {
         car.setColor("Red");
         car.setPrice(15500.00);
         car.setDescription("Awesome car. Drive like New.");
+        car.setFeatures("Classic with GPS Navigation. Full Multimedia experience.");
 
         category.getCars().add(car);
+        category.setHascar(true);
+
         car.setCategory(category);
 
         //Add the car an empty list
@@ -125,6 +143,7 @@ public class DataLoader implements CommandLineRunner {
         //another car
         car = new Car();
 //        car.setCarphoto("");
+        car.setCategorytype(category.getType());
         car.setManufacturer("Honda");
         car.setCarmodel("Accord");
         car.setCartrim("Touring");
@@ -133,6 +152,7 @@ public class DataLoader implements CommandLineRunner {
         car.setColor("Grey Metallic");
         car.setPrice(20500.00);
         car.setDescription("Very nice Car.");
+        car.setFeatures("Top of the line options with GPS Navigation.");
 
         category.getCars().add(car);
         car.setCategory(category);
@@ -152,6 +172,7 @@ public class DataLoader implements CommandLineRunner {
 
 
         car = new Car();
+        car.setCategorytype(category.getType());
         car.setCarphoto("https://res.cloudinary.com/dg89xpg9o/image/upload/v1552462112/Challenge6_CarsListing/2016-ford-fusion-quick-take-review-car-and-driver-photo-664780-s-original.jpg");
         car.setManufacturer("Ford");
         car.setCarmodel("Fusion");
@@ -161,14 +182,16 @@ public class DataLoader implements CommandLineRunner {
         car.setColor("Smooth Blue");
         car.setPrice(28000.00);
         car.setDescription("Best value.");
+        car.setFeatures("Top of the line options with GPS Navigation.");
 
         category.getCars().add(car);
         car.setCategory(category);
 
         categoryRepository.save(category);
 
-        category = new Category(3);
+        category = new Category(4);
         car = new Car();
+        car.setCategorytype(category.getType());
         car.setCarphoto("https://res.cloudinary.com/dg89xpg9o/image/upload/v1552461923/Challenge6_CarsListing/71W3py0SoWL._UY560_.jpg");
         car.setManufacturer("Ford");
         car.setCarmodel("Taurus");
@@ -177,15 +200,12 @@ public class DataLoader implements CommandLineRunner {
         car.setMileage(9000);
         car.setColor("Red Orange");
         car.setPrice(25000.00);
-        car.setDescription("Roomy.  Nice options.");
+        car.setDescription("Roomy.  Nice options. Full sized sedan at a not so full price.");
+        car.setFeatures("GPS Navigation. Heated and cool seats. Bose surround sound.");
 
         category.getCars().add(car);
-
-
+        category.setHascar(true);
         car.setCategory(category);
-        categoryRepository.save(category);
-
-         category = new Category(4);
         categoryRepository.save(category);
 
          category = new Category(5);
@@ -195,16 +215,16 @@ public class DataLoader implements CommandLineRunner {
         categoryRepository.save(category);
 
          category = new Category(7);
-         categoryRepository.save(category);
+        categoryRepository.save(category);
 
          category = new Category(8);
-        categoryRepository.save(category);
-
-         category = new Category(9);
          categoryRepository.save(category);
 
-         category = new Category(10);
+         category = new Category(9);
         categoryRepository.save(category);
+
+         category = new Category(10);
+         categoryRepository.save(category);
 
          category = new Category(11);
         categoryRepository.save(category);
@@ -212,14 +232,18 @@ public class DataLoader implements CommandLineRunner {
          category = new Category(12);
         categoryRepository.save(category);
 
-        category = new Category(13);
+         category = new Category(13);
         categoryRepository.save(category);
 
         category = new Category(14);
         categoryRepository.save(category);
 
         category = new Category(15);
+        categoryRepository.save(category);
+
+        category = new Category(16);
         car = new Car();
+        car.setCategorytype(category.getType());
         car.setCarphoto("https://res.cloudinary.com/dg89xpg9o/image/upload/v1552459269/Challenge6_CarsListing/honda-civic-type-r-2015-_2.jpg");
         car.setManufacturer("Honda");
         car.setCarmodel("Civic");
@@ -229,7 +253,10 @@ public class DataLoader implements CommandLineRunner {
         car.setColor("Blue");
         car.setPrice(20500.00);
         car.setDescription("For racing only.");
+        car.setFeatures("300hp modified for racers.  Fully loaded.  Leather-stitched seats.");
+
         category.getCars().add(car);
+        category.setHascar(true);
         car.setCategory(category);
         categoryRepository.save(category);
 

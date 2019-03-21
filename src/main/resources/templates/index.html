@@ -20,6 +20,34 @@
 
 
    <style>
+       .navbar-nav {
+           line-height:18px;
+       }
+       /**/
+       .navbar {
+           min-height: 15px;
+       }
+
+       .navbar-brand {
+           padding: 0 5px;
+           height: 12px;
+           line-height: 12px;
+       }
+
+       .navbar-toggle {
+            /*(80px - button height 34px) / 2 = 23px*/
+           margin-top: 5px;
+           padding: 7px 10px !important;
+       }
+
+       @media (min-width: 768px) {
+           .navbar-nav > li > a {
+              /*(80px - line-height of 27px) / 2 = 26.5px*/
+               padding-top: 12px;
+               padding-bottom: 1px;
+               line-height: 15px;
+           }
+       }
         .navbar-custom .nav-item.active .nav-link,
         .navbar-custom .nav-item:focus .nav-link,
         .navbar-custom .nav-item:hover .nav-link
@@ -40,10 +68,15 @@
 
         /*}*/
 
-        /*body {*/
-            /*font-size: 116%;*/
+        body {
+            font-size: 116%;
             /*padding: 9px;*/
-        /*}*/
+        }
+
+       .navbar-logo {
+           width: 90px;
+       }
+
         <!--/* and this styles the dropdown trigger link, when open */-->
         <!--/*.navbar-custom .dropdown.show a {*/-->
             <!--/*background-color: #BADA55;*/-->
@@ -66,6 +99,21 @@
                 }
             });
         }
+
+
+        function openmodal(id){
+        var id=id;
+        var other="<a onclick='openmodal(1)' style='cursor:pointer'>product 1</a><a onclick='openmodal(2)' style='cursor:pointer'>product 2</a><a onclick='openmodal(3)' style='cursor:pointer' >product 3</a>";
+        $('#item_modal').fadeOut("slow",function(){
+        $(this).modal('hide')
+        }).fadeIn("slow",function(){
+        $("#target_title").text(id);
+        $("#target_other").html(other);
+        $(this).modal('show')
+        });
+        }
+
+
     </script>
 
 </head>
@@ -75,15 +123,14 @@
 
 <div th:replace="base :: navlinks"></div>
 
+
+
 <div th:if="${addsuccess}">
     <h8 style="color: green" th:text="${addsuccess}"> </h8>
     <h7 style="color: red" th:text="${info}"> </h7>
-</div><hr />
+    <hr />
+</div>
 
-
-
-<h2 style="text-align:center;"> All Car Categories and Listings </h2>
-<br /> <hr /> <br />
 
 <!--<div class = "container">-->
     <!--<div class ="jumbotron">-->
@@ -93,14 +140,69 @@
     <!--</div>-->
 <!--</div>-->
 
-<div th:each="category : ${categories}">
-    <h3 th:text="${category.type}"></h3><br />
 
+<!--<div th:if="${listofcars}">-->
+    <!--<h5>  There is currently no car listed in this category. </h5>-->
+<!--</div>-->
+<h5>Recently added cars</h5>
+<div th:if="${recentcarsaddedmsg}">
+<span style="font-style:italic;font-size:85%;" th:text="${recentcarsaddedmsg}" />
+</div>
+
+<div th:unless="${recentcarsaddedmsg}">
+<th:block th:each="car : ${recentcarsadded}">
+    <div class="card" style="width: 20rem; text-align:center;display:inline-block;">
+        <div class="shadow p-3 mb-1 bg-white rounded">
+            <div class="view overlay">
+                <a data-toggle="modal" data-target="#myModal3" th:href="@{/details/{id}(id=${car.id})}" >
+                    <img class="card-img-top" th:src="${car.carphoto}" alt="No pic available.  Please add pic."
+                         style="border-radius:.60rem; max-width:100%;height:190px;width:auto;">
+                    <div class="mask rgba-white-slight"></div>
+                </a>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title mb-3 text-center">[[${car.year}]] [[${car.manufacturer}]] [[${car.carmodel}]] [[${car.cartrim}]] </h5>
+                <h6 class="card-subtitle mb-3 text-center">Only $[[${#numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}]] !!! </h6>
+                <h6 class="card-subtitle mb-2 text-muted text-center">[[${car.mileage}]] miles</h6>
+                <p class="card-text">[[${car.description}]]</p>
+
+
+                <a class="btn btn-primary btn-sm" role="button" th:href="@{/update/{id}(id=${car.id})}">Update</a>
+                <!--<button type="button" class="btn btn-primary btn-sm" th:onclick="'javascript:openShowDetails(\'' + ${car.id} +'\');'">Details</button>-->
+                <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#myModal3" th:href="@{/details/{id}(id=${car.id})}">Details</a>
+                <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
+
+            </div>
+        </div>
+    </div>
+</th:block>
+</div>
+<br /> <hr /> <br />
+
+<h2 style="text-align:center;"> All Car Categories and Listings </h2>
+
+<br /> <hr /> <br />
+
+<div th:each="category : ${categories}">
+  <div th:unless="${category.idnum == 1}">
+    <h3 th:text="${category.type}"></h3><br />
+        <!--<div th:if="${category.idnum == 1}">-->
+        <!--<span style="font-style:italic" th:text="${recentcarsremoved}" />-->
+        <!--</div>-->
+
+        <!--<div th:switch="${carslistings}">-->
+        <!--<span th:case="'0'" style="font-style:italic" th:text="${recentcars}"></span>-->
+        <!--<span th:case="'1'" style="font-style:italic">  There is currently no car listed in this category.</span>-->
+        <!--<span th:case="'2'" style="font-style:italic"> </span>-->
+        <!--</div>-->
+        <div th:unless="${category.hascar}">
+            <span style="font-style:italic"> There is currently no car listed in this category. </span>
+        </div>
     <th:block th:each="car : ${category.cars}">
         <div class="card" style="width: 20rem; text-align:center;display:inline-block;">
           <div class="shadow p-3 mb-1 bg-white rounded">
             <div class="view overlay">
-                <a data-toggle="modal" data-target="#myModal" th:href="@{/details/{id}(id=${car.id})}" >
+                <a data-toggle="modal" data-target="#myModal3" th:href="@{/details/{id}(id=${car.id})}" >
                 <img class="card-img-top" th:src="${car.carphoto}" alt="No pic available.  Please add pic."
                       style="border-radius:.60rem; max-width:100%;height:190px;width:auto;">
                     <div class="mask rgba-white-slight"></div>
@@ -111,25 +213,23 @@
                    <h6 class="card-subtitle mb-3 text-center">Only $[[${#numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}]] !!! </h6>
                     <h6 class="card-subtitle mb-2 text-muted text-center">[[${car.mileage}]] miles</h6>
                     <p class="card-text">[[${car.description}]]</p>
+
+
                     <a class="btn btn-primary btn-sm" role="button" th:href="@{/update/{id}(id=${car.id})}">Update</a>
                     <!--<button type="button" class="btn btn-primary btn-sm" th:onclick="'javascript:openShowDetails(\'' + ${car.id} +'\');'">Details</button>-->
-                  <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#myModal" th:href="@{/details/{id}(id=${car.id})}">Details</a>
-                  <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
-              </div>
+                    <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#myModal3" th:href="@{/details/{id}(id=${car.id})}">Details</a>
+                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
+
+                </div>
             </div>
           </div>
     </th:block> <br />  <hr /> <br />
+  </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-        </div>
-    </div>
-</div>
 
+
+    <div th:replace="base :: modal"></div>
     <div th:replace="base :: footer"></div>
     <!-- Bootstrap core JavaScript-->
    <!--jQuery first, then Popper.js, then Bootstrap JS -->
