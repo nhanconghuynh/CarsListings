@@ -2,76 +2,114 @@
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Listing Add Form</title>
+    <title>Update / Modify Car Listing Form</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <style>
+        .navbar-custom .nav-item.active .nav-link,
+        .navbar-custom .nav-item:focus .nav-link,
+        .navbar-custom .nav-item:hover .nav-link
+        {
+            color: #ff3e52;
+        }
+
+        .navbar-custom .dropdown-menu .dropdown-item:hover   {
+            background-color: rgba(174, 225, 241, 0.51);
+        }
+
+        .navbar-custom .dropdown-menu .dropdown-item:focus   {
+            background-color: #007BFF;-->
+        }
+        span.form-error-text { color: red; }
+        body { font-size: 116%;}
+    </style>
 </head>
 <body>
+
+<div class="modal-header" th:fragment="modifyCarModal">
+
+    <h5 class="modal-title">Update/Modify Car Listing</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+</div>
+<div class="modal-body" style="font-size:100%">
+
 <form action="#" th:action="@{/updateprocess}" th:object="${car}" method="post"
-      enctype="multipart/form-data">
+      enctype="multipart/form-data" style="font-size:85%;">
 
     <input type="hidden" th:field="*{id}" />
 
 
     <div th:if="${car.carphoto} != null" >
-        Current Car Photo:
-        <img th:src="${car.carphoto}"  height="250px" width="250px" />
+        <b>Current Car Photo:</b>
+        <img th:src="${car.carphoto}"  style="display:block;margin-left:auto;margin-right: auto;max-height:350px;max-width:350px;height:auto;width:auto;" />
         <hr />
     </div>
 
     <div th:if="${car.carphoto} == null">
-        No pic exists for this listing. Please add pic.
+        <h6 style="color:red">No pic exists for this listing. Please add pic.</h6>
         <input type="file" name="file" />
         <hr />
     </div>
 
-        <!--<input type="file" name="file" />-->
+    <!--<input type="file" name="file" />-->
     <!--<input id="image" type="file" name="image">-->
     <!--<button id="image_alt" type="button">Select image</button>-->
-    <br/><br/>
 
 
-    Category: <select th:field="*{category}" >
+    <b>Category:</b> <select th:field="*{category}" class="float-right" >
 
-    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
+    <option  th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
     </option>
 
 
 </select><br /><br />
 
-    Manufacturer: <input type="text" th:field="*{manufacturer}" /><br />
+    <b>Manufacturer:</b> <input class="float-right" type="text" th:field="*{manufacturer}" /><br />
     <span th:if="${#fields.hasErrors('manufacturer')}"
           th:errors="*{manufacturer}"></span><br />
 
-    Model: <input type="text" th:field="*{carmodel}" /><br />
+    <b>Model: </b> <input class="float-right" type="text" th:field="*{carmodel}" /><br />
     <span th:if="${#fields.hasErrors('carmodel')}"
           th:errors="*{carmodel}"></span><br />
 
-    Trim: <input type="text" th:field="*{cartrim}" /><br />
+    <b>Trim:</b> <input class="float-right" type="text" th:field="*{cartrim}" /><br />
     <span th:if="${#fields.hasErrors('cartrim')}"
           th:errors="*{carTrim}"></span><br />
 
-    Year: <input type="text" th:field="*{year}" /><br />
+    <b>Year:</b> <input class="float-right" type="text" th:field="*{year}" /><br />
     <span th:if="${#fields.hasErrors('year')}"
           th:errors="*{year}"></span><br />
 
-    Mileage: <input type="text" th:field="*{mileage}" /><br />
+    <b>Mileage:</b> <input class="float-right" type="text" th:field="*{mileage}" /><br />
     <span th:if="${#fields.hasErrors('mileage')}"
           th:errors="*{mileage}"></span><br />
 
-    Color: <input type="text" th:field="*{color}" /><br />
+    <b>Color:</b> <input class="float-right" type="text" th:field="*{color}" /><br />
     <span th:if="${#fields.hasErrors('color')}"
           th:errors="*{color}"></span><br />
 
-    Listing Price:
+    <b>Listing Price:</b>
     <!--<input type="number" step="0.01" th:field="*{price}" />-->
-    <input type="number"  th:field="*{price}" placeholder="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" /><br />
+    <input class="float-right" type="number"  th:field="*{price}" placeholder="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" /><br />
     <span th:if="${#fields.hasErrors('price')}"
           th:errors="*{price}"></span><br />
 
-    Description: <textarea rows="3" th:field="*{description}" />
+    <b>Description:</b> <textarea class="float-right" rows=1 style="height:auto; width:100%;" th:field="*{description}" />
     <span th:if="${#fields.hasErrors('description')}"
-          th:errors="*{description}"></span><br />
+          th:errors="*{description}"></span><br /><br /><br />
 
-    <input type="submit" value="Submit" />
+    <b>Features:</b> <textarea rows=2 style="height:auto; width:100%;" th:field="*{features}" th:errorclass="form-field-error" />
+    <span class="form-error-text" th:if="${#fields.hasErrors('features')}"
+          th:errors="*{features}"></span>
+
+    <div class="modal-footer">
+    <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancel</button>
+    <input class="btn btn-primary btn-sm"  type="submit" value="Update" />
+    </div>
 </form>
+
+</div>
 </body>
 </html>

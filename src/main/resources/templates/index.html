@@ -77,14 +77,50 @@
            width: 90px;
        }
 
-        <!--/* and this styles the dropdown trigger link, when open */-->
-        <!--/*.navbar-custom .dropdown.show a {*/-->
-            <!--/*background-color: #BADA55;*/-->
-        <!--/*}*/-->
+       .card-notify-add {
+           position: absolute;
+           right: -3px;
+           top: -1px;
+           background: #f2df45;
+           background-blend-mode: color-dodge;
+           align-items: center;
+           align-content: center;
+           align-self: center;
+           text-align: center;
+           vertical-align: bottom;
+           display:table-cell;
+           /*line-height:17px;*/
+           border-style: ridge ;
+           border-radius: 50%;
+           color: #ff001c;
+           width: 61px;
+           height: 61px;
+           /*padding: 5px 12px 0 0;*/
+           font-size: 14px;
+           font-weight: bold;
 
-        <!--/*.navbar-custom .navbar-toggle:focus {*/-->
-        <!--/*background-color: #378dff;*/-->
-        <!--/*}*/-->
+       }
+       .card-notify-modified {
+           position: absolute;
+           right: 100px;
+           top: 0px;
+           background: #f26c22;
+           background-blend-mode: color-dodge;
+           text-align: center;
+           border-style: ridge ;
+           border-radius: 30px 30px 30px 30px;
+           color: #fafff3;
+           padding: 5px 10px;
+           font-size: 12px;
+
+       }
+
+       .card:hover {
+           background: #0064ff;
+           box-shadow: 12px 15px 20px 0px rgba(0, 177, 255, 0.38);
+           border-radius: 3px;
+           transition: all 0.2s ease;
+       }
     </style>
 
     <script>
@@ -140,11 +176,7 @@
     <!--</div>-->
 <!--</div>-->
 
-
-<!--<div th:if="${listofcars}">-->
-    <!--<h5>  There is currently no car listed in this category. </h5>-->
-<!--</div>-->
-<h5>Recently added cars</h5>
+<h5>Recently Added Cars</h5>
 <div th:if="${recentcarsaddedmsg}">
 <span style="font-style:italic;font-size:85%;" th:text="${recentcarsaddedmsg}" />
 </div>
@@ -153,8 +185,11 @@
 <th:block th:each="car : ${recentcarsadded}">
     <div class="card" style="width: 20rem; text-align:center;display:inline-block;">
         <div class="shadow p-3 mb-1 bg-white rounded">
+            <div class="card-image">
+                    <span class="card-notify-add">&nbsp;Just&nbsp; Added</span>
+            </div>
             <div class="view overlay">
-                <a data-toggle="modal" data-target="#myModal3" th:href="@{/details/{id}(id=${car.id})}" >
+                <a data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}" >
                     <img class="card-img-top" th:src="${car.carphoto}" alt="No pic available.  Please add pic."
                          style="border-radius:.60rem; max-width:100%;height:190px;width:auto;">
                     <div class="mask rgba-white-slight"></div>
@@ -167,15 +202,53 @@
                 <p class="card-text">[[${car.description}]]</p>
 
 
-                <a class="btn btn-primary btn-sm" role="button" th:href="@{/update/{id}(id=${car.id})}">Update</a>
+                <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#modifyCarModal" th:href="@{/update/{id}(id=${car.id})}">Update</a>
                 <!--<button type="button" class="btn btn-primary btn-sm" th:onclick="'javascript:openShowDetails(\'' + ${car.id} +'\');'">Details</button>-->
-                <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#myModal3" th:href="@{/details/{id}(id=${car.id})}">Details</a>
+                <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}">Details</a>
                 <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
 
             </div>
         </div>
     </div>
 </th:block>
+</div>
+<br /> <hr />
+
+<h5>Recently Modified/Updated Car Listings</h5>
+<div th:if="${recentcarsmodifiedmsg}">
+    <span style="font-style:italic;font-size:85%;" th:text="${recentcarsmodifiedmsg}" />
+</div>
+
+<div th:unless="${recentcarsmodifiedmsg}">
+    <th:block th:each="car : ${recentcarsmodified}">
+        <div class="card" style="width: 20rem; text-align:center;display:inline-block;">
+            <div class="shadow p-3 mb-1 bg-white rounded">
+                <div class="card-image">
+                        <span class="card-notify-modified">Recently Updated</span>
+                </div>
+                <div class="view overlay">
+                    <a data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}" >
+                        <img class="card-img-top" th:src="${car.carphoto}" alt="No pic available.  Please add pic."
+                             style="border-radius:.60rem; max-width:100%;height:190px;width:auto;">
+                        <div class="mask rgba-white-slight"></div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title mb-3 text-center">[[${car.year}]] [[${car.manufacturer}]] [[${car.carmodel}]] [[${car.cartrim}]] </h5>
+                    <h6 class="card-subtitle mb-3 text-center">Only $[[${#numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}]] !!! </h6>
+                    <h6 class="card-subtitle mb-2 text-muted text-center">[[${car.mileage}]] miles</h6>
+                    <p class="card-text">[[${car.description}]]</p>
+
+
+                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/update/{id}(id=${car.id})}">Update</a>
+                    <!--<button type="button" class="btn btn-primary btn-sm" th:onclick="'javascript:openShowDetails(\'' + ${car.id} +'\');'">Details</button>-->
+                    <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}">Details</a>
+                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
+
+                </div>
+            </div>
+        </div>
+    </th:block>
 </div>
 <br /> <hr /> <br />
 
@@ -184,30 +257,36 @@
 <br /> <hr /> <br />
 
 <div th:each="category : ${categories}">
-  <div th:unless="${category.idnum == 1}">
-    <h3 th:text="${category.type}"></h3><br />
-        <!--<div th:if="${category.idnum == 1}">-->
-        <!--<span style="font-style:italic" th:text="${recentcarsremoved}" />-->
-        <!--</div>-->
 
-        <!--<div th:switch="${carslistings}">-->
-        <!--<span th:case="'0'" style="font-style:italic" th:text="${recentcars}"></span>-->
-        <!--<span th:case="'1'" style="font-style:italic">  There is currently no car listed in this category.</span>-->
-        <!--<span th:case="'2'" style="font-style:italic"> </span>-->
-        <!--</div>-->
+  <div th:unless="${category.idnum == 1}">
+
+    <h3 th:text="${category.type}"></h3><br />
+
         <div th:unless="${category.hascar}">
             <span style="font-style:italic"> There is currently no car listed in this category. </span>
         </div>
+
     <th:block th:each="car : ${category.cars}">
-        <div class="card" style="width: 20rem; text-align:center;display:inline-block;">
+        <div class="card rounded" style="width: 20rem; text-align:center;display:inline-block;">
           <div class="shadow p-3 mb-1 bg-white rounded">
-            <div class="view overlay">
-                <a data-toggle="modal" data-target="#myModal3" th:href="@{/details/{id}(id=${car.id})}" >
+
+              <div class="card-image">
+                  <div th:if="${car.recentadd}">
+                    <span class="card-notify-add">&nbsp;Just&nbsp; Added</span>
+                  </div>
+
+                  <div th:if="${car.recentmodified}">
+                  <span class="card-notify-modified">Recently Updated</span>
+                  </div>
+              </div>
+              <div class="view overlay">
+                <a data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}" >
                 <img class="card-img-top" th:src="${car.carphoto}" alt="No pic available.  Please add pic."
                       style="border-radius:.60rem; max-width:100%;height:190px;width:auto;">
                     <div class="mask rgba-white-slight"></div>
                 </a>
             </div>
+
               <div class="card-body">
                 <h5 class="card-title mb-3 text-center">[[${car.year}]] [[${car.manufacturer}]] [[${car.carmodel}]] [[${car.cartrim}]] </h5>
                    <h6 class="card-subtitle mb-3 text-center">Only $[[${#numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}]] !!! </h6>
@@ -215,9 +294,9 @@
                     <p class="card-text">[[${car.description}]]</p>
 
 
-                    <a class="btn btn-primary btn-sm" role="button" th:href="@{/update/{id}(id=${car.id})}">Update</a>
+                    <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#modifyCarModal" th:href="@{/update/{id}(id=${car.id})}">Update</a>
                     <!--<button type="button" class="btn btn-primary btn-sm" th:onclick="'javascript:openShowDetails(\'' + ${car.id} +'\');'">Details</button>-->
-                    <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#myModal3" th:href="@{/details/{id}(id=${car.id})}">Details</a>
+                    <a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}">Details</a>
                     <a class="btn btn-primary btn-sm" role="button" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>
 
                 </div>

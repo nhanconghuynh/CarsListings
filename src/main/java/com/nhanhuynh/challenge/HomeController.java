@@ -43,17 +43,26 @@ public class HomeController {
                 cat.setHascar(true);
             }
         }
-       List<Car> carlist = new ArrayList<>();
+       List<Car> recentaddcarlist = new ArrayList<>();
+        List<Car> recentmodifiedcarlist = new ArrayList<>();
 
         for(Car car: carRepository.findAll()) {
             if (car.isRecentadd())
-                carlist.add(car);
+                recentaddcarlist.add(car);
+            if (car.isRecentmodified())
+                recentmodifiedcarlist.add(car);
         }
 
-        if (carlist.isEmpty())
+        if (recentaddcarlist.isEmpty())
             model.addAttribute("recentcarsaddedmsg", "There are currently no recently added car listing.");
         else
-            model.addAttribute("recentcarsadded", carlist);
+            model.addAttribute("recentcarsadded", recentaddcarlist);
+
+        if (recentmodifiedcarlist.isEmpty())
+            model.addAttribute("recentcarsmodifiedmsg", "There are currently no recently updated/modified car listing.");
+        else
+            model.addAttribute("recentcarsmodified", recentmodifiedcarlist);
+
 
         model.addAttribute("categories", categoryRepository.findAll());
 
@@ -207,6 +216,7 @@ public class HomeController {
         try {
             Map uploadResult = cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcetype", "auto"));
             car.setCarphoto(uploadResult.get("url").toString());
+            car.setRecentmodified(true);
             carRepository.save(car);
         }
         catch (IOException e){
