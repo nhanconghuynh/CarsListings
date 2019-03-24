@@ -47,6 +47,33 @@
             height:auto;
         }
 
+        .form-control:focus {
+            border-color: rgba(70, 145, 87, 0.82);
+            box-shadow: inset 0 1px 1px rgba(69, 92, 131, 0.15), 0 0 12px rgba(133, 207, 153, 0.6);
+        }
+
+        .custom-select:focus {
+            border-color: #bf7734;
+            box-shadow: inset 0 1px 1px rgba(67, 88, 125, 0.24), 0 0 12px rgba(255, 156, 41, 0.6);
+        }
+
+
+        /*.custom-file-label:after {*/
+            /*content: attr(data-content);*/
+            /*content: "Testing";*/
+        /*}*/
+        .custom-file-control:lang(en)::after {
+            content: "Select photo...";
+        }
+
+        .custom-file-control:lang(en)::before {
+            content: "Poo Poo";
+        }
+
+        /*.custom-file-input {*/
+            /*opacity: revert;*/
+        /*}*/
+
     </style>
 
     <script>
@@ -98,7 +125,7 @@
                 // $(".image-preview-input-title").text("Browse");
             });
             // Create the preview image
-            $(".image-preview-input input:file").change(function (){
+            $(".image-preview-input input:file").change(function (event){
                 // var img = $('<img/>', {
                 //     id: 'dynamic'
                 //     height: auto,
@@ -106,6 +133,7 @@
                 // });
                 // var img = "#myImage";
                 var file = this.files[0];
+                var fieldVal = $(this).val();
                 var reader = new FileReader();
                 // Set preview image into the popover data-content
                 reader.onload = function (e) {
@@ -115,9 +143,22 @@
                     // $('.image-preview').popover().attr("data-content","");
                     // $('.image-preview').popover().attr("content","No photo selected.");
 
+
+                    // Change the node's value by removing the fake path (Chrome)
+                    // fieldVal = fieldVal.replace("C:\\fakepath\\", "");
+                    // fieldVal = $(this).val();
+
+                    // if (fieldVal != undefined || fieldVal != "") {
+                    //     $(this).next(".custom-file-label").attr("data-content", fieldVal);
+                    //     $(this).next(".custom-file-label").text(fieldVal);
+                    // }
+                    // $(this).next(".custom-file-label").html(e.target.result.name);
+
                     // $('#myImage').attr('src', "#");
                     // img.attr('src', e.target.result);
-                    // img.appendTo($('#myImage'));
+                    // img.appendTo($('#myIm"age'));
+
+
                     $('#myImage').attr('src', e.target.result);
                     $('#mytestImage').attr('src', e.target.result);
                     // $(".image-preview").attr("data-content",$('#myImage')).popover("show");
@@ -126,14 +167,22 @@
                     // $(".image-preview").attr("data-content",$('#myImage')[0].outerHTML).popover("show");
                     // $(".image-preview").attr("data-content",$(img));
                     $('#previewImage').popover('update');
-                    $("#previewImage").attr("data-content",$('#myImage')[0].outerHTML).popover("show");
+                    $("#previewImage").attr("data-content", $('#myImage')[0].outerHTML).popover("show");
 
+                    }
 
+                    if(!event.target.files[0]) {
+                        $('#myImage').attr('src', "#");
+                        $('#previewImage').attr("data-content","").popover("hide");
+                     }
 
-                }
-                reader.readAsDataURL(file);
+                    if(event.target.files[0]) {
+                        reader.readAsDataURL(file);
+                    }
+
             });
         });
+
 
         // $("#custom-input-file").change(function() {
         //     readURL(this);
@@ -160,22 +209,39 @@
         //     placement: 'bottom',
         //     content: function(){return '<img src="'+$(this).data('img') + '" />';}
         // });
-        $('.custom-file-input').on('change', function() {
-            var fileName = $(this).val();
-            $(this).next('.form-control-file').addClass("selected").html(fileName);
-        });
-
-
-
-        // $("#previewImage").popover({
-        //     html:       true,
-        //     content:    function () {
-        //         return '<img src="'+$(this).data('img') + '" />';
-        //     }
-        // }).hover(function(){
-        //     $('#previewImage').attr('src',e.target.result);
+        // $('.custom-file-input').on('change', function() {
+        //     var fileName = $(this).val();
+        //     $(this).next('.form-control-file').addClass("selected").html(fileName);
         // });
 
+        /* show file value after file select */
+        // $('.custom-file-input').on('change',function(){
+        //     var fileName = document.getElementById("custom-input-file").files[0].name;
+        //     $(this).next('.form-control-file').addClass("selected").html(fileName);
+        // })
+
+        // $('#custominputfile').on('change',function(){
+        //     get the file name
+            // var fileName = $(this).val();
+            // replace the "Choose a file" label
+            // $(this).next('.custom-file-label').html(fileName);
+        // })
+
+        // $('#custominputfile').change(function(e){
+        //     var fileName = e.target.files[0].name;
+        //     $('.custom-file-label').html(fileName);
+        // });
+
+        $("input[type=file]").change(function (event) {
+            // $(this).next('.custom-file-label').html(e.target.files[0].name);
+            // var fieldVal = $(this).val();
+            // fieldVal = fieldVal.replace("C:\\fakepath\\", "");
+            var fieldVal = event.target.files[0].name;
+            if (fieldVal != undefined || fieldVal != "") {
+                $(this).next(".custom-file-label").attr("data-content", fieldVal);
+                $(this).next(".custom-file-label").text(fieldVal);
+            }
+        });
     </script>
 
 </head>
@@ -210,14 +276,17 @@
                 <!-- image-preview-input -->
 
 
-                        <div class="custom-file image-preview-input">
+                        <div id="customFile" class="custom-file image-preview-input">
                         <!--<span class="image-preview-input-title">Browse</span>-->
 
-                        <input id="custom-input-file" type="file" class="form-control-file custom-file-control custom-file-input image-preview-filename" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custom-file-input" />
-                            <label class="custom-file-label text-truncate " for="custom-input-file">Choose Car Photo</label>
-                            <b>Photo Selected:</b><img id="myImage" src="#" alt="No photo." style="display:none;max-height:200px;max-width:200px;height:auto;width:auto;"/>
-d
+                            <input id="custominputfile" type="file"  accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile" />
 
+                        <!--<input id="custominputfile" type="file" class="form-control-file custom-file-control custom-file-input" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile"  lang="en"/>-->
+                            <!--<label class="custom-file-label text-truncate " for="custominputfile">Choose Car Photo</label>-->
+                            <!--<b>Photo Selected:</b>-->
+                        <span>
+                            <img id="myImage" src="#" alt="No photo." style="display:none;max-height:200px;max-width:200px;height:auto;width:auto;"/>
+                        </span>
                         </div>
 
                         <div class="input-group-append">
