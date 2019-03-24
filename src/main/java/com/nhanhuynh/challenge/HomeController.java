@@ -72,7 +72,7 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/add")
+    @RequestMapping("/add")
     public String addForm(Model model){
         model.addAttribute("car", new Car());
         model.addAttribute("categories", categoryRepository.findAll());
@@ -124,8 +124,9 @@ public class HomeController {
         return "redirect:/";
     }
 
+// Get mapping only does GET .  RequestMapping does both POST and GET.
 
-    @GetMapping("/addcategory")
+    @RequestMapping("/addcategory")
     public String addCategoryForm(Model model){
         model.addAttribute("category", new Category());
         return "addcategoryform";
@@ -150,15 +151,30 @@ public class HomeController {
         return "redirect:/";
     }
 
-    @GetMapping("/deletecategory")
+    @RequestMapping("/deletecategory")
     public String deleteCategoryForm(Model model){
-        model.addAttribute("car", new Car());
         model.addAttribute("categories", categoryRepository.findAll());
-        return "deletecategoryform :: deletecategoryModal";
+//        return "deletecategoryform :: deletecategoryModal";
+        return "deletecategoryform";
     }
 
-    @PostMapping("/deletecategoryprocess")
-    public String deletecategoryprocessForm(Car car, Model model, RedirectAttributes redirectAttributes) {
+    @RequestMapping("/deletecategoryconfirm/{id}")
+    public String deleteCategoryConfirm(@PathVariable("id") long id , Model model){
+        model.addAttribute("categories", categoryRepository.findAll());
+
+
+//        Category category = new Category();
+//        category.setId(id);
+//        for(Category cat: categoryRepository.findAll()) {
+//            if (cat.getId() == id)
+//                category = cat;
+//        }
+        model.addAttribute("category", categoryRepository.findById(id));
+        return "deletecategoryconfirmation";
+    }
+
+    @RequestMapping("/deletecategoryprocess/{id}")
+    public String deletecategoryprocess(@PathVariable("id") long id, Car car, Model model, RedirectAttributes redirectAttributes) {
         Car carset = new Car();
         Category category = car.getCategory();
         // clear all cars in category
@@ -204,27 +220,61 @@ public class HomeController {
         return "updateform";
     }
 
+    @RequestMapping("/updatepic/{pic}")
+    public String updatecarPhoto(@PathVariable("pic") String pic, Car car, Model model){
+        model.addAttribute("car", carRepository.findById(car.getId()).get());
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "updateform";
+    }
+
+
     @PostMapping("/updateprocess")
     public String processupdateForm(@Valid @ModelAttribute("car") Car car, BindingResult result, Model model,
-                                    @RequestParam("file")MultipartFile file) {
+                                    @RequestParam("file")MultipartFile file, RedirectAttributes redirectAttributes) {
         model.addAttribute("categories", categoryRepository.findAll());
 
         if (result.hasErrors()) {
             return "updateform";
         }
 
-        if (file.isEmpty()){
-            return "redirect:/updateprocess";
+        if (result.hasErrors() && !file.isEmpty()) {
+            model.addAttribute("message", "Please re-select a file to upload.");
+            return "updateform";
         }
+
+        else if (result.hasErrors() && file.isEmpty()){
+            model.addAttribute("message", "Please select a file to upload.");
+            return "updateform";
+        }
+
+        else if (file.isEmpty()) {
+            model.addAttribute("message", "Please select a file to upload.");
+            return "updateform";
+        }
+
+
         try {
             Map uploadResult = cloudc.upload(file.getBytes(), ObjectUtils.asMap("resourcetype", "auto"));
             car.setCarphoto(uploadResult.get("url").toString());
             car.setRecentmodified(true);
             carRepository.save(car);
+
+//            Category category = car.getCategory();
+//            car.setRecentadd(true);
+//            categoryRepository.findById(category.getId()).get().getCars().add(car);
+//            categoryRepository.save(categoryRepository.findById(category.getId()).get());
+//
+            redirectAttributes.addFlashAttribute("addsuccess",
+                    "You have successfully uploaded '" + file.getOriginalFilename() + "'" +
+                            " and modified a car listing for the ");
+            redirectAttributes.addFlashAttribute("info",car.getCategory().getType() +
+                    " " + car.getYear()+ " " + car.getManufacturer() +
+                    " " + car.getCarmodel() + " " + car.getCartrim() + ".");
+
         }
         catch (IOException e){
             e.printStackTrace();
-            return "redirect:/updateprocess";
+            return "redirect:/updateform";
         }
 
         return "redirect:/";

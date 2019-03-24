@@ -28,80 +28,53 @@
         span.form-error-text { color: red; }
         body { font-size: 116%;}
     </style>
-    <!--<script>-->
-    <!--function openmodal(id){-->
-    <!--var id=id;-->
-    <!--var other="<a onclick='openmodal(1)' style='cursor:pointer'>product 1</a><a onclick='openmodal(2)' style='cursor:pointer'>product 2</a><a onclick='openmodal(3)' style='cursor:pointer' >product 3</a>";-->
-    <!--$('#item_modal').fadeOut("slow",function(){-->
-    <!--$(this).modal('hide')-->
-    <!--}).fadeIn("slow",function(){-->
-    <!--$("#target_title").text(id);-->
-    <!--$("#target_other").html(other);-->
-    <!--$(this).modal('show')-->
-    <!--});-->
-    <!--}</script> -->
+
 
 </head>
 <body>
-<div  class="container" th:fragment="deletecategoryModal">
-<div class="modal-header">
 
-    <h6 class="modal-title">Delete Category</h6>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-</div>
-<div class="modal-body" style="font-size:100%">
+<!--<div  class="container" th:fragment="deleteCategoryModal">-->
 
-        Choose the Category to delete: <select id="category" name="category" >
-
-        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
-        </option>
-
-        </select>
-
-    <hr style="height:1px; visibility:hidden; margin-bottom: 0px;" />
-
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#test2" data-dismiss="modal"> Testing </button>
-
-</div>
-</div>
-
-<div id="test1" class="modal fade" role="dialog" style="overflow:auto" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-
-            <div class="modal-body">
-                <!--<form action="#" th:action="@{/deletecategoryprocess}" th:object="${car}" method="post">-->
-<!---->
-                    <!--<input type="hidden" th:field="*{id}" />-->
-<!---->
-                    <!--Choose the Category to delete: <select th:field="*{category}" >-->
-<!---->
-                    <!--<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">-->
-                    <!--</option>-->
-<!---->
-                <!--</select>-->
-                    <!--<hr style="height:1px; visibility:hidden; margin-bottom: 0px;" />-->
-
-                Are you sure you want to delete the Category [[${category.type}]]
-                and all the Car Listings Under this Category?
-
-                <!--<input type="submit" class="btn btn-primary" value="Submit" />-->
-              <!--</form>-->
-            </div>
-        </div>
+    <div class="modal-header">
+        <h6 class="modal-title">Delete A Category</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     </div>
-</div>
+
+    <div class="modal-body" style="font-size:85%; text-align: center;">
+
+        <!--<form th:action="@{/roles/editpermission/__${roleDTO.roleName}__/__${roleDTO.roleId}__}" method="get" id="validation-form" style="float:left;">        -->
+
+        <b>Choose the Category to delete: </b><br /> <br />
+
+            <!--<select th:field="*{category}" >-->
 
 
+            <select id="category" name="category" >
 
-<div th:replace="base :: footer"></div>
-<!-- Bootstrap core JavaScript-->
-<!--jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <option th:unless="${category.idnum == 1}" th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}"> </option>
+
+            </select> <br /> <br />
+
+        <!--<p>-->
+            <!--<label>Category:</label> <select th:field="*{category}" >-->
+<!---->
+            <!--<option th:unless="${category.idnum == 1}" th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">-->
+            <!--</option>-->
+<!---->
+        <!--</select>-->
+        <!--</p>-->
+
+        <!--<hr style="height:1px; visibility:hidden; margin-bottom: 0px;" />-->
+
+        <!--Modal footer -->
+        <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-light mr-auto" data-dismiss="modal" style="text-align: center; width:75px">Cancel</button>
+            <a style="text-align: center; width:75px" class="btn btn-primary" role="button" data-toggle="modal" data-target="#deleteCategoryConfirmModal" href="#" data-dismiss="modal">Submit</a>
+        </div>
+
+    </div>
+<!--</div>-->
+
 
 </body>
 </html>

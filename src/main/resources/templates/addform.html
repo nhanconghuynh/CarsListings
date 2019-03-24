@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Add New Car Listing Form</title>
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">-->
     <!--<link rel="stylesheet" href="/../resources/static/css/custom.css" type="text/css">-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -31,75 +33,264 @@
     span.form-error-text { color: red; }
     body { font-size: 116%;}
         form  { display: table;  margin: 0 auto;   }
+
         p     { display: table-row;  }
+
         label { display: table-cell; font-weight: bold; }
+
         input { display: table-cell;}
-</style>
+
+        img {
+            max-width: 200px;
+            max-height: 200px;
+            width: auto;
+            height:auto;
+        }
+
+    </style>
+
+    <script>
+
+
+
+        $(document).on('click', '#close-preview', function(){
+            $('.image-preview').popover('hide');
+            // Hover befor close the preview
+            $('.image-preview').hover
+            (
+                function () {
+                    $('.image-preview').popover('show');
+                },
+                function () {
+                    $('.image-preview').popover('hide');
+                }
+            );
+        });
+
+        $(function() {
+            // Create the close button
+            var closebtn = $('<button/>', {
+                type:"button",
+                text: 'x',
+                id: 'close-preview',
+                style: 'font-size: initial;',
+            });
+            closebtn.attr("class","close pull-right");
+            // Set the popover default content
+            $('.image-preview').popover({
+                trigger: 'hover',
+                html:true,
+                title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+                placement:'bottom',
+                content: "No image."
+            });
+            // Clear event
+            $('.image-preview-clear').click(function(){
+                $('.image-preview').attr("data-content","").popover("hide");
+                $('#myImage').attr('src', "#");
+                $('#mytestImage').attr('src', "#");
+                $('.image-preview-filename').val("");
+                // $('.image-preview-clear').hide();
+                $('.image-preview-input input:file').val("");
+                // $(".image-preview-input-title").text("Browse");
+            });
+            // Create the preview image
+            $(".image-preview-input input:file").change(function (){
+                // var img = $('<img/>', {
+                //     id: 'dynamic',
+                //     height: auto,
+                //     width: 200
+                // });
+                // var img = "#myImage";
+                var file = this.files[0];
+                var reader = new FileReader();
+                // Set preview image into the popover data-content
+                reader.onload = function (e) {
+                    // $(".image-preview-input-title").text("Change");
+                    // $(".image-preview-clear").show();
+                    $(".image-preview-filename").val(file.name);
+                    // $('.image-preview').popover().attr("data-content","");
+                    // $('.image-preview').popover().attr("content","No photo selected.");
+
+                    // $('#myImage').attr('src', "#");
+                    // img.attr('src', e.target.result);
+                    // img.appendTo($('#myImage'));
+                    $('#myImage').attr('src', e.target.result);
+                    $('#mytestImage').attr('src', e.target.result);
+                    // $(".image-preview").attr("data-content",$('#myImage')).popover("show");
+                    // $(".image-preview").popover("show");
+                    // $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+                    // $(".image-preview").attr("data-content",$('#myImage')[0].outerHTML).popover("show");
+                    // $(".image-preview").attr("data-content",$(img));
+                }
+                reader.readAsDataURL(file);
+            });
+        });
+
+        // function readURL(input) {
+        //     if (input.files && input.files[0]) {
+        //         var reader = new FileReader();
+        //
+        //         reader.onload = function (e) {
+        //             $('#myImage').attr('src', e.target.result);
+        //         }
+        //
+        //         reader.readAsDataURL(input.files[0]);
+        //     }
+        // }
+        //
+        // $("#custom-input-file").change(function() {
+        //     readURL(this);
+        // });
+
+        // $('a[rel=popover]').popover({
+        //     html: true,
+        //     trigger: 'hover',
+        //     placement: 'bottom',
+        //     content: function(){return '<img src="'+$(this).data('img') + '" />';}
+        // });
+        $('.custom-file-input').on('change', function() {
+            var fileName = $(this).val();
+            $(this).next('.form-control-file').addClass("selected").html(fileName);
+        });
+
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+
+        // $("#previewImage").popover({
+        //     html:       true,
+        //     content:    function () {
+        //         return '<img src="'+$(this).data('img') + '" />';
+        //     }
+        // }).hover(function(){
+        //     $('#previewImage').attr('src',e.target.result);
+        // });
+
+    </script>
+
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
+
+<!--<button type="button" class="btn btn-outline-info" data-toggle="popover"  data-container="body" data-trigger="click hover focus" title="Photo Preview" data-placement="bottom"  data-content="Testing testing.">Test Popover</button><hr />-->
+
+
 
 <form action="#" th:action="@{/addprocess}" th:object="${car}" method="post"
       enctype="multipart/form-data" style="font-size:85%;" >
 
     <input type="hidden" th:field="*{id}" />
 
-    <p>
-    <label>Car Photo:</label> <input type="file" name="file" /><br />
+
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-prepend">
+
+                <button type="button" class="btn btn-outline-secondary image-preview-clear">Clear</button>
+                <!--<a class="btn" rel="popover" data-img="//placehold.it/400x200">Image Preview</a>-->
+            </div>
+
+            <!--<input type="text" class="form-control image-preview-filename" disabled="disabled">-->
+
+        <!--<label>Car Photo:</label>-->
+            <!--<span class="input-group-btn">-->
+                    <!-- image-preview-clear button -->
+                <!-- image-preview-input -->
+
+
+                        <div class="custom-file image-preview-input">
+                        <!--<span class="image-preview-input-title">Browse</span>-->
+
+                        <input id="custom-input-file" type="file" class="form-control-file custom-file-control custom-file-input image-preview" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custom-file-input" />
+                            <label class="custom-file-label text-truncate" for="custom-input-file">Choose Car Photo</label>
+                            <b>Photo Selected:</b><img id="myImage" src="#" alt="this car photo" style="max-height:200px;max-width:200px;height:auto;width:auto;"/>
+
+
+                        </div>
+
+                        <div class="input-group-append">
+                            <button id="previewImage" class="btn btn-outline-info" data-toggle="popover"  data-container="body" data-trigger="click focus hover" data-html="true" title="Photo Preview" data-placement="bottom"
+                                    data-content="<img id='mytestImage' src='#' alt='No photo yet'/>"
+                                    type="button" >Image Preview</button>
+                        </div>
+
+            <!--<div class="input-group-prepend">-->
+                <!--<button type="button" class="btn btn-outline-secondary image-preview-clear">Clear</button>-->
+                <!--<button class="btn btn-outline-info image-preview" type="button" >Image Preview</button>-->
+            <!--</div>-->
+        </div><!-- /input-group image-preview [TO HERE]-->
+    <!--<div class="custom-file">-->
+    <!--<input type="file" class="form-control-file custom-file-control" name="file" id="customFile" /><br />-->
+    <!--<label class="custom-file-label" for="customFile">Choose car photo</label>-->
     <span  th:if="${message}">
         <h6 style="color: red" th:text="${message}"> </h6>
     </span>
-    </p>
+    </div>
 
-    <p>
-        <label>Category:</label> <select th:field="*{category}" >
+    <br />
+    <div class="input-group">
+        <label>Category:</label> <select class="custom-select" th:field="*{category}" >
 
     <option th:unless="${category.idnum == 1}" th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
     </option>
 
     </select>
-    </p>
+    </div>
 
     <br />
 
-    <p>
-
-    <label>Manufacturer:  </label><input type="text" th:field="*{manufacturer}" th:errorclass="form-field-error" />
+    <div class="input-group">
+    <label>Manufacturer:  </label><input class="form-control" type="text" th:field="*{manufacturer}" placeholder="Name of Manufacturer" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('manufacturer')}"
           th:errors="*{manufacturer}"></span>
-    </p><br />
+    </div>
+    <br />
 
     <p>
-    <label>Model:</label> <input type="text" th:field="*{carmodel}" th:errorclass="form-field-error" />
+    <label>Model:</label> <input class="form-control" type="text" th:field="*{carmodel}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('carmodel')}"
           th:errors="*{carmodel}"></span></p><br />
 
     <p>
-    <label>Trim:</label> <input type="text" th:field="*{cartrim}" th:errorclass="form-field-error" />
+    <label>Trim:</label> <input class="form-control" type="text" th:field="*{cartrim}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('cartrim')}"
           th:errors="*{carTrim}"></span></p><br />
 
     <p>
-    <label>Year:</label> <input type="text" th:field="*{year}" th:errorclass="form-field-error" />
+    <label>Year:</label> <input class="form-control" type="text" th:field="*{year}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('year')}"
           th:errors="*{year}"></span></p><br />
 
     <p>
-    <label>Mileage:</label> <input type="text" th:field="*{mileage}" th:errorclass="form-field-error" />
+    <label>Mileage:</label> <input class="form-control" type="text" th:field="*{mileage}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('mileage')}"
           th:errors="*{mileage}"></span></p><br />
 
     <p>
-    <label>Color:</label> <input type="text" th:field="*{color}" th:errorclass="form-field-error" />
+    <label>Color:</label>  <input class="form-control" type="text" th:field="*{color}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('color')}"
           th:errors="*{color}"></span></p><br />
 
     <p>
-    <label>Listing Price:</label> <input type="number" th:field="*{price}"
-                          placeholder="0.00" min="0.01" step="0.01" pattern="^\d+(?:\.\d{2,2})?$"
-                          th:errorclass="form-field-error" />
-    <span class="form-error-text" th:if="${#fields.hasErrors('price')}"
-          th:errors="*{price}"></span></p><br />
+    <label>Listing Price:</label>
+    <div class="input-group">
+        <div class="input-group-prepend">
+        <span class="input-group-text">$</span>
+        </div>
+        <!--<div th:if="${price}">-->
+        <input class="form-control" type="text" th:field="*{price}" placeholder="0.00" step="0.01"  />
+        <!--</div>-->
+
+        <!--<div th:unless="${price}">-->
+        <!--<input class="form-control" type="text" placeholder="0.00" step="0.01"  />-->
+        <!--</div>-->
+
+        <span class="text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+
+    </div>
+    </p>
+    <br />
 
     <p>
     <label>Short Description:  &nbsp;  </label> <textarea rows=1 style="height:auto; width:100%;" th:field="*{description}" th:errorclass="form-field-error" />
@@ -125,9 +316,9 @@
     <div th:replace="base :: footer"></div>
     <!-- Bootstrap core JavaScript-->
     <!--jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
 </body>
 </html>

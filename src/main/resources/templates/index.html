@@ -21,33 +21,33 @@
 
    <style>
        .navbar-nav {
-           line-height:18px;
+           line-height:15px;
        }
+
+       /*.navbar {*/
+           /*min-height: 15px;*/
+       /*}*/
        /**/
-       .navbar {
-           min-height: 15px;
-       }
-
-       .navbar-brand {
-           padding: 0 5px;
-           height: 12px;
-           line-height: 12px;
-       }
-
-       .navbar-toggle {
+       /*.navbar-brand {*/
+           /*padding: 0 5px;*/
+           /*height: 12px;*/
+           /*line-height: 12px;*/
+       /*}*/
+       /**/
+       /*.navbar-toggle {*/
             /*(80px - button height 34px) / 2 = 23px*/
-           margin-top: 5px;
-           padding: 7px 10px !important;
-       }
+           /*margin-top: 5px;*/
+           /*padding: 7px 10px !important;*/
+       /*}*/
 
-       @media (min-width: 768px) {
-           .navbar-nav > li > a {
+       /*@media (min-width: 768px) {*/
+           /*.navbar-nav > li > a {*/
               /*(80px - line-height of 27px) / 2 = 26.5px*/
-               padding-top: 12px;
-               padding-bottom: 1px;
-               line-height: 15px;
-           }
-       }
+               /*padding-top: 12px;*/
+               /*padding-bottom: 1px;*/
+               /*line-height: 15px;*/
+           /*}*/
+       /*}*/
         .navbar-custom .nav-item.active .nav-link,
         .navbar-custom .nav-item:focus .nav-link,
         .navbar-custom .nav-item:hover .nav-link
@@ -73,8 +73,18 @@
             /*padding: 9px;*/
         }
 
-       .navbar-logo {
-           width: 90px;
+       span.form-error-text { color: red; }
+
+       /*.navbar-logo {*/
+           /*width: 90px;*/
+       /*}*/
+
+       .blink_me {
+           animation: blinker 1s linear infinite;
+       }
+
+       @keyframes blinker {
+           50% { opacity: 0; }
        }
 
        .card-notify-add {
@@ -121,36 +131,10 @@
            border-radius: 3px;
            transition: all 0.2s ease;
        }
+
+
     </style>
 
-    <script>
-        function openShowDetails(id) {
-            $.ajax({
-                url: "/details/" + id,
-                success: function(response) {
-                console.log(response);
-                $('#showdetails').html(response);
-                $('#showdetailsModal').modal();
-                $('#showdetailsModal').modal('open');
-                }
-            });
-        }
-
-
-        function openmodal(id){
-        var id=id;
-        var other="<a onclick='openmodal(1)' style='cursor:pointer'>product 1</a><a onclick='openmodal(2)' style='cursor:pointer'>product 2</a><a onclick='openmodal(3)' style='cursor:pointer' >product 3</a>";
-        $('#item_modal').fadeOut("slow",function(){
-        $(this).modal('hide')
-        }).fadeIn("slow",function(){
-        $("#target_title").text(id);
-        $("#target_other").html(other);
-        $(this).modal('show')
-        });
-        }
-
-
-    </script>
 
 </head>
 <body>
@@ -318,6 +302,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
 </body>
 </html>

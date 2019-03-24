@@ -44,12 +44,14 @@
     <div th:if="${car.carphoto} != null" >
         <b>Current Car Photo:</b>
         <img th:src="${car.carphoto}"  style="display:block;margin-left:auto;margin-right: auto;max-height:350px;max-width:350px;height:auto;width:auto;" />
+        <br />
+        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#changePicModal" th:href="@{/updatepic/{pic}(pic=${car.carphoto})}">Change Picture</button>
         <hr />
     </div>
 
     <div th:if="${car.carphoto} == null">
         <h6 style="color:red">No pic exists for this listing. Please add pic.</h6>
-        <input type="file" name="file" />
+        <input type="file" class="btn btn-info btn-sm" name="file" />
         <hr />
     </div>
 
@@ -60,44 +62,44 @@
 
     <b>Category:</b> <select th:field="*{category}" class="float-right" >
 
-    <option  th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
+    <option th:unless="${category.idnum == 1}" th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
     </option>
 
 
 </select><br /><br />
 
-    <b>Manufacturer:</b> <input class="float-right" type="text" th:field="*{manufacturer}" /><br />
-    <span th:if="${#fields.hasErrors('manufacturer')}"
+    <b>Manufacturer:</b> <input class="float-right" type="text" th:field="*{manufacturer}" th:errorclass="form-field-error" /><br />
+    <span class="form-error-text" th:if="${#fields.hasErrors('manufacturer')}"
           th:errors="*{manufacturer}"></span><br />
 
-    <b>Model: </b> <input class="float-right" type="text" th:field="*{carmodel}" /><br />
-    <span th:if="${#fields.hasErrors('carmodel')}"
+    <b>Model: </b> <input class="float-right" type="text" th:field="*{carmodel}" th:errorclass="form-field-error" /><br />
+    <span class="form-error-text" th:if="${#fields.hasErrors('carmodel')}"
           th:errors="*{carmodel}"></span><br />
 
-    <b>Trim:</b> <input class="float-right" type="text" th:field="*{cartrim}" /><br />
-    <span th:if="${#fields.hasErrors('cartrim')}"
+    <b>Trim:</b> <input class="float-right" type="text" th:field="*{cartrim}" th:errorclass="form-field-error" /><br />
+    <span class="form-error-text" th:if="${#fields.hasErrors('cartrim')}"
           th:errors="*{carTrim}"></span><br />
 
-    <b>Year:</b> <input class="float-right" type="text" th:field="*{year}" /><br />
-    <span th:if="${#fields.hasErrors('year')}"
+    <b>Year:</b> <input class="float-right" type="text" th:field="*{year}" th:errorclass="form-field-error" /><br />
+    <span class="form-error-text" th:if="${#fields.hasErrors('year')}"
           th:errors="*{year}"></span><br />
 
-    <b>Mileage:</b> <input class="float-right" type="text" th:field="*{mileage}" /><br />
-    <span th:if="${#fields.hasErrors('mileage')}"
+    <b>Mileage:</b> <input class="float-right" type="text" th:field="*{mileage}" th:errorclass="form-field-error" /><br />
+    <span class="form-error-text" th:if="${#fields.hasErrors('mileage')}"
           th:errors="*{mileage}"></span><br />
 
-    <b>Color:</b> <input class="float-right" type="text" th:field="*{color}" /><br />
-    <span th:if="${#fields.hasErrors('color')}"
+    <b>Color:</b> <input class="float-right" type="text" th:field="*{color}" th:errorclass="form-field-error" /><br />
+    <span class="form-error-text" th:if="${#fields.hasErrors('color')}"
           th:errors="*{color}"></span><br />
 
     <b>Listing Price:</b>
     <!--<input type="number" step="0.01" th:field="*{price}" />-->
-    <input class="float-right" type="number"  th:field="*{price}" placeholder="0.00" min="0" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" /><br />
+    <input class="float-right" type="number"  th:field="*{price}" placeholder="0.00" min="1.00" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" /><br />
     <span th:if="${#fields.hasErrors('price')}"
           th:errors="*{price}"></span><br />
 
-    <b>Description:</b> <textarea class="float-right" rows=1 style="height:auto; width:100%;" th:field="*{description}" />
-    <span th:if="${#fields.hasErrors('description')}"
+    <b>Description:</b> <textarea class="float-right" rows=1 style="height:auto; width:100%;" th:field="*{description}" th:errorclass="form-field-error" />
+    <span class="text text-danger" th:if="${#fields.hasErrors('description')}"
           th:errors="*{description}"></span><br /><br /><br />
 
     <b>Features:</b> <textarea rows=2 style="height:auto; width:100%;" th:field="*{features}" th:errorclass="form-field-error" />
@@ -106,7 +108,7 @@
 
     <div class="modal-footer">
     <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Cancel</button>
-    <input class="btn btn-primary btn-sm"  type="submit" value="Update" />
+    <input class="btn btn-primary btn-sm"  type="submit" value="Save changes" />
     </div>
 </form>
 

@@ -7,32 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <style>
-        .navbar-custom .nav-item.active .nav-link,
-        .navbar-custom .nav-item:focus .nav-link,
-        .navbar-custom .nav-item:hover .nav-link
-        {
-            color: #ff3e52;
-        }
 
-        .navbar-custom .dropdown-menu .dropdown-item:hover   {
-            background-color: rgba(174, 225, 241, 0.51);
-        }
-
-        .navbar-custom .dropdown-menu .dropdown-item:focus   {
-            background-color: #007BFF;-->
-        }
-        span.form-error-text { color: red; }
-        body { font-size: 116%;}
-    </style>
-
-    <script>
-        $(function() {
-            $('#closemodal').click(function() {
-                $('#modalwindow').modal('hide');
-            });
-        });
-    </script>
 </head>
 <body>
 
@@ -59,11 +34,10 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                <a class="btn btn-warning btn-sm" role="button" data-toggle="modal" data-target="#deleteCarModal" th:href="@{/delete/{id}(id=${car.id})}" >Delete this listing</a>
+                <a class="btn btn-warning btn-sm" role="button" data-dismiss="modal" data-toggle="modal" data-target="#deleteCarModal" th:href="@{/delete/{id}(id=${car.id})}" >Delete this listing</a>
+                <a class="btn btn-info btn-sm" role="button" data-dismiss="modal" data-toggle="modal" data-target="#modifyCarModal" th:href="@{/update/{id}(id=${car.id})}" >Modify this listing</a>
             </div>
         </div>
 
-
-            <div th:replace="base :: modal"></div>
 </body>
 </html>

@@ -59,6 +59,8 @@ public class Car {
         this.recentadd = false;
         this.recentmodified = false;
         this.recentremove = false;
+        this.price = 0.01;
+        this.mileage = 0;
     }
 
     public long getId() {
