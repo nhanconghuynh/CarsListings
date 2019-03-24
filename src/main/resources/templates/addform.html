@@ -9,6 +9,10 @@
     <!--<link rel="stylesheet" href="/../resources/static/css/custom.css" type="text/css">-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!--<script src="/../static/js/bootstrap.file-input.js"></script>-->
+
+    <script src="http://gregpike.net/demos/bootstrap-file-input/bootstrap.file-input.js"></script>
+
 
     <style>
 
@@ -57,22 +61,23 @@
             box-shadow: inset 0 1px 1px rgba(67, 88, 125, 0.24), 0 0 12px rgba(255, 156, 41, 0.6);
         }
 
+        .hero-unit h1 {
+            margin: 0 0 10px 0;
+        }
 
+        .hero-unit .file-input-wrapper {
+            margin: 0 0 10px 0;
+        }
+
+        pre.prettyprint {
+            padding: 10px;
+            margin-top: 10px;
+        }
         /*.custom-file-label:after {*/
             /*content: attr(data-content);*/
             /*content: "Testing";*/
         /*}*/
-        .custom-file-control:lang(en)::after {
-            content: "Select photo...";
-        }
 
-        .custom-file-control:lang(en)::before {
-            content: "Poo Poo";
-        }
-
-        /*.custom-file-input {*/
-            /*opacity: revert;*/
-        /*}*/
 
     </style>
 
@@ -232,15 +237,20 @@
         //     $('.custom-file-label').html(fileName);
         // });
 
-        $("input[type=file]").change(function (event) {
+        // $("input[type=file]").change(function (event) {
             // $(this).next('.custom-file-label').html(e.target.files[0].name);
             // var fieldVal = $(this).val();
             // fieldVal = fieldVal.replace("C:\\fakepath\\", "");
-            var fieldVal = event.target.files[0].name;
-            if (fieldVal != undefined || fieldVal != "") {
-                $(this).next(".custom-file-label").attr("data-content", fieldVal);
-                $(this).next(".custom-file-label").text(fieldVal);
-            }
+            // var fieldVal = event.target.files[0].name;
+            // if (fieldVal != undefined || fieldVal != "") {
+            //     $(this).next(".custom-file-label").attr("data-content", fieldVal);
+            //     $(this).next(".custom-file-label").text(fieldVal);
+            // }
+        // });
+
+        $(window).load(function() {
+            $('input[type=file]').bootstrapFileInput();
+            $('.file-inputs').bootstrapFileInput();
         });
     </script>
 
@@ -276,12 +286,24 @@
                 <!-- image-preview-input -->
 
 
-                        <div id="customFile" class="custom-file image-preview-input">
+                        <div id="customFile" class="file-inputs input-group image-preview-input">
                         <!--<span class="image-preview-input-title">Browse</span>-->
 
-                            <input id="custominputfile" type="file"  accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile" />
+                            <input id="custominputfile" type="file"  data-filename-placement="outside" title="Browse Car Photos" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile" placeholder="Choose Car Photo" />
 
-                        <!--<input id="custominputfile" type="file" class="form-control-file custom-file-control custom-file-input" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile"  lang="en"/>-->
+                            <!--<span class="input-group-btn">-->
+                            <!--<span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>-->
+                            <!--<input id="custominputfile" name="uploaded_file" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">-->
+                            <!--</span>-->
+                            <!--<span class="form-control text-truncate"></span>-->
+
+
+
+                            <!--<label class="btn btn-outline-light " for="custominputfile">-->
+                            <!--<input id="custominputfile" type="file" class="form-control" style="display:none" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile" placeholder="Choose Car Photo" />-->
+                            <!--Choose Car Photo-->
+                            <!--</label>-->
+                            <!--<input id="custominputfile" type="file" class="form-control-file custom-file-control custom-file-input" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile"  lang="en"/>-->
                             <!--<label class="custom-file-label text-truncate " for="custominputfile">Choose Car Photo</label>-->
                             <!--<b>Photo Selected:</b>-->
                         <span>
