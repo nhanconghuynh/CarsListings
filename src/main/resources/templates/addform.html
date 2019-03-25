@@ -42,6 +42,8 @@
 
         label { display: table-cell; font-weight: bold; }
 
+        /*select { display: table-cell;}*/
+
         input { display: table-cell;}
 
         img {
@@ -56,6 +58,10 @@
             box-shadow: inset 0 1px 1px rgba(69, 92, 131, 0.15), 0 0 12px rgba(133, 207, 153, 0.6);
         }
 
+        select {
+            border-color: #bf0f23;
+            box-shadow: inset 0 1px 1px rgba(67, 88, 125, 0.24), 0 0 12px rgba(255, 64, 103, 0.6);
+        }
 
         .custom-select:focus {
         border-color: #bf7734;
@@ -173,7 +179,9 @@
 
 
     <div class="form-group">
-            <div id="fileInputGroup" class="input-group">
+
+        <div id="fileInputGroup" class="input-group">
+
                 <!--<div class="input-group-append">-->
                 <button type="button" class="btn btn-outline-secondary image-preview-clear">Clear</button>
                 <input id="displayFilename" type="text" class="form-control image-preview-filename" disabled placeholder="No photo chosen.">
@@ -185,33 +193,33 @@
                             data-content="No photo selected." type="button" >Image Preview</button>
                 </div>
 
-            </div><!-- /input-group image-preview [TO HERE]-->
+        </div><!-- /input-group image-preview [TO HERE]-->
                 <!--<div class="input-group-prepend">-->           <!--<div class="input-group-prepend">-->
-    </div>  <!-- form group -->
+    <!--</div>  &lt;!&ndash; form group &ndash;&gt;-->
 
     <span  th:if="${message}">
         <h6 style="color: red" th:text="${message}"> </h6>
     </span>
+
     </div>
 
     <br />
-    <div class="input-group">
-        <label>Category:</label> <select class="custom-select" th:field="*{category}" >
+
+
+    <p>
+        <label>Category:</label> <select class="form-control" th:field="*{category}" >
 
     <option th:unless="${category.idnum == 1}" th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
     </option>
 
     </select>
-    </div>
-
+    </p>
     <br />
 
-    <div class="input-group">
+    <p>
     <label>Manufacturer:  </label><input class="form-control" type="text" th:field="*{manufacturer}" placeholder="Name of Manufacturer" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('manufacturer')}"
-          th:errors="*{manufacturer}"></span>
-    </div>
-    <br />
+          th:errors="*{manufacturer}"></span> </p> <br />
 
     <p>
     <label>Model:</label> <input class="form-control" type="text" th:field="*{carmodel}" th:errorclass="form-field-error" />
@@ -240,12 +248,14 @@
 
     <p>
     <label>Listing Price:</label>
-    <div class="input-group">
-        <div class="input-group-prepend">
-        <span class="input-group-text">$</span>
-        </div>
+    <!--<div class="input-group">-->
+        <!--<div class="input-group-prepend">-->
+        <!--<span class="input-group-text">$</span>-->
+        <!--</div>-->
         <!--<div th:if="${price}">-->
+        <span>$
         <input class="form-control" type="text" th:field="*{price}" placeholder="0.00" step="0.01" style="text-align: right"  />
+        </span>
         <!--</div>-->
 
         <!--<div th:unless="${price}">-->
