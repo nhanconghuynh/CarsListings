@@ -61,23 +61,50 @@
             box-shadow: inset 0 1px 1px rgba(67, 88, 125, 0.24), 0 0 12px rgba(255, 156, 41, 0.6);
         }
 
-        .hero-unit h1 {
-            margin: 0 0 10px 0;
-        }
-
-        .hero-unit .file-input-wrapper {
-            margin: 0 0 10px 0;
-        }
-
-        pre.prettyprint {
-            padding: 10px;
-            margin-top: 10px;
-        }
+        /*.hero-unit h1 {*/
+            /*margin: 0 0 10px 0;*/
+        /*}*/
+        /**/
+        /*.hero-unit .file-input-wrapper {*/
+            /*margin: 0 0 10px 0;*/
+        /*}*/
+        /**/
+        /*pre.prettyprint {*/
+            /*padding: 10px;*/
+            /*margin-top: 10px;*/
+        /*}*/
         /*.custom-file-label:after {*/
             /*content: attr(data-content);*/
             /*content: "Testing";*/
         /*}*/
 
+        /*input[type='file']:before*/
+        /*{*/
+            /*text-indent: -999em;*/
+            /*outline: none;*/
+            /*width: 100%;*/
+            /*height: 100%;*/
+            /*position: absolute;*/
+        /*}*/
+
+        /*input[type="file"]:before {*/
+            /*content: "Choose Car Photo";*/
+            /*background: #fff;*/
+            /*width: 100%;*/
+            /*height: 35px;*/
+            /*display: block;*/
+            /*text-align: left;*/
+            /*position: relative;*/
+            /*margin: 0;*/
+            /*margin: 0 5px;*/
+            /*left: -6px;*/
+            /*border: 1px solid #e0e0e0;*/
+            /*top: -1px;*/
+            /*line-height: 35px;*/
+            /*color: #b6b6b6;*/
+            /*padding-left: 5px;*/
+            /*display: block;*/
+        /*}*/
 
     </style>
 
@@ -144,7 +171,7 @@
                 reader.onload = function (e) {
                     // $(".image-preview-input-title").text("Change");
                     // $(".image-preview-clear").show();
-                    // $(".image-preview-filename").val(file.name);
+                    $(".image-preview-filename").val(file.name);
                     // $('.image-preview').popover().attr("data-content","");
                     // $('.image-preview').popover().attr("content","No photo selected.");
 
@@ -171,6 +198,9 @@
                     // $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
                     // $(".image-preview").attr("data-content",$('#myImage')[0].outerHTML).popover("show");
                     // $(".image-preview").attr("data-content",$(img));
+
+                    // document.getElementById("#displayFilename").value = this.value;
+
                     $('#previewImage').popover('update');
                     $("#previewImage").attr("data-content", $('#myImage')[0].outerHTML).popover("show");
 
@@ -248,10 +278,12 @@
             // }
         // });
 
-        $(window).load(function() {
-            $('input[type=file]').bootstrapFileInput();
-            $('.file-inputs').bootstrapFileInput();
-        });
+        // $(window).load(function() {
+        //     $('input[type=file]').bootstrapFileInput();
+        //     $('.file-inputs').bootstrapFileInput();
+        // });
+
+
     </script>
 
 </head>
@@ -269,16 +301,57 @@
 
 
     <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <button id="previewImage" class="btn btn-outline-info" data-toggle="popover"  data-container="body" data-trigger="focus hover" data-html="true" title="Photo Preview" data-placement="bottom"
-                        data-content="No photo selected."
-                        type="button" >Image Preview</button>
+        <!--<div class="input-group">-->
+            <div id="customFileInput" class="input-group input-group-flush">
+
+
+                <!--<span class="input-group-btn">-->
+                            <!--<span class="btn btn-outline-primary" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>-->
+                            <!--<input id="custominputfile" name="custominputfile" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">-->
+                <!--</span>-->
+                <!--<span class="form-control text-truncate"></span>-->
+                <button type="button" class="btn btn-outline-secondary image-preview-clear">Clear</button>
+                <input id="displayFilename" type="text" class="form-control image-preview-filename disabled">
+                <div class="image-preview-input">
+                    <span class=" btn btn-outline-primary" onclick="$(this).parent().find('input[type=file]').click();">Choose Car Photo</span>
+                    <input id="custominputfile" name="custominputfile" class="form-control-file" style="display: none;" type="file" accept="image/png, image/jpeg, image/, image/jpg, image/tiff">
+                    <img id="myImage" src="#" alt="No photo." style="display:none;max-height:200px;max-width:200px;height:auto;width:auto;"/>
+                    <button id="previewImage" class="btn btn-outline-info" data-toggle="popover"  data-container="body" data-trigger="focus hover" data-html="true" title="Photo Preview" data-placement="bottom"
+                            data-content="No photo selected." type="button" >Image Preview</button>
+                </div>
+
+
+
+                <!--<span class="input-group-btn">-->
+                <!--<span class="btn btn-outline-primary" onclick="$(this).parent().find('input[type=file]').click();">Choose Car Photo</span>-->
+                <!--<input id="custominputfile" name="custominputfile" class="form-control-file" style="display: inline-flex;" type="file" accept="image/png, image/jpeg, image/, image/jpg, image/tiff">-->
+                <!--</span>-->
+                <!--<span class="form-control text-truncate image-preview-filename"></span>-->
+
+                <!--<span>-->
+
+                <!--</span>-->
+
+            </div><!-- /input-group image-preview [TO HERE]-->
+                <!--<div class="input-group-prepend">-->
+    </div>  <!-- form group -->
+
+
 
                 <!--<a class="btn" rel="popover" data-img="//placehold.it/400x200">Image Preview</a>-->
-            </div>
+            <!--</div>-->
 
             <!--<input type="text" class="form-control image-preview-filename" disabled="disabled">-->
+
+        <!--<input id="custominputfile" type="file" class="form-control-file custom-file-control custom-file-input" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile"  lang="en"/>-->
+        <!--<label class="custom-file-label text-truncate " for="custominputfile">Choose Car Photo</label>-->
+        <!--<b>Photo Selected:</b>-->
+
+        <!--<label class="btn btn-outline-light " for="custominputfile">-->
+        <!--<input id="custominputfile" type="file" class="form-control" style="display:none" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile" placeholder="Choose Car Photo" />-->
+        <!--Choose Car Photo-->
+        <!--</label>-->
+
 
         <!--<label>Car Photo:</label>-->
             <!--<span class="input-group-btn">-->
@@ -286,40 +359,21 @@
                 <!-- image-preview-input -->
 
 
-                        <div id="customFile" class="file-inputs input-group image-preview-input">
+
                         <!--<span class="image-preview-input-title">Browse</span>-->
 
-                            <input id="custominputfile" type="file"  data-filename-placement="outside" title="Browse Car Photos" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile" placeholder="Choose Car Photo" />
-
-                            <!--<span class="input-group-btn">-->
-                            <!--<span class="btn btn-primary" onclick="$(this).parent().find('input[type=file]').click();">Browse</span>-->
-                            <!--<input id="custominputfile" name="uploaded_file" onchange="$(this).parent().parent().find('.form-control').html($(this).val().split(/[\\|/]/).pop());" style="display: none;" type="file">-->
-                            <!--</span>-->
-                            <!--<span class="form-control text-truncate"></span>-->
 
 
 
-                            <!--<label class="btn btn-outline-light " for="custominputfile">-->
-                            <!--<input id="custominputfile" type="file" class="form-control" style="display:none" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile" placeholder="Choose Car Photo" />-->
-                            <!--Choose Car Photo-->
-                            <!--</label>-->
-                            <!--<input id="custominputfile" type="file" class="form-control-file custom-file-control custom-file-input" accept="image/png, image/jpeg, image/, image/jpg, image/tiff" name="custominputfile"  lang="en"/>-->
-                            <!--<label class="custom-file-label text-truncate " for="custominputfile">Choose Car Photo</label>-->
-                            <!--<b>Photo Selected:</b>-->
-                        <span>
-                            <img id="myImage" src="#" alt="No photo." style="display:none;max-height:200px;max-width:200px;height:auto;width:auto;"/>
-                        </span>
-                        </div>
 
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-outline-secondary image-preview-clear">Clear</button>
-                        </div>
+                        <!--<div class="input-group-append">-->
+                        <!--</div>-->
 
             <!--<div class="input-group-prepend">-->
                 <!--<button type="button" class="btn btn-outline-secondary image-preview-clear">Clear</button>-->
                 <!--<button class="btn btn-outline-info image-preview" type="button" >Image Preview</button>-->
             <!--</div>-->
-        </div><!-- /input-group image-preview [TO HERE]-->
+
     <!--<div class="custom-file">-->
     <!--<input type="file" class="form-control-file custom-file-control" name="file" id="customFile" /><br />-->
     <!--<label class="custom-file-label" for="customFile">Choose car photo</label>-->
