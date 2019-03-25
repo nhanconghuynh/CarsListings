@@ -151,7 +151,7 @@
                 $('#previewImage').attr("data-content","").popover("hide");
 
                 $('#myImage').attr('src', "#");
-                $('.image-preview-filename').val("");
+                $('.image-preview-filename').val("No file chosen.");
                 // $('.image-preview-clear').hide();
                 $('.image-preview-input input:file').val("");
                 // $(".image-preview-input-title").text("Browse");
@@ -209,6 +209,7 @@
                     if(!event.target.files[0]) {
                         $('#myImage').attr('src', "#");
                         $('#previewImage').attr("data-content","").popover("hide");
+                        $('.image-preview-filename').val("No file chosen.");
                      }
 
                     if(event.target.files[0]) {
@@ -302,7 +303,7 @@
 
     <div class="form-group">
         <!--<div class="input-group">-->
-            <div id="customFileInput" class="input-group input-group-flush">
+            <div id="customFileInput" class="input-group">
 
 
                 <!--<span class="input-group-btn">-->
@@ -311,7 +312,7 @@
                 <!--</span>-->
                 <!--<span class="form-control text-truncate"></span>-->
                 <button type="button" class="btn btn-outline-secondary image-preview-clear">Clear</button>
-                <input id="displayFilename" type="text" class="form-control image-preview-filename disabled">
+                <input id="displayFilename" type="text" class="form-control image-preview-filename" disabled>
                 <div class="image-preview-input">
                     <span class=" btn btn-outline-primary" onclick="$(this).parent().find('input[type=file]').click();">Choose Car Photo</span>
                     <input id="custominputfile" name="custominputfile" class="form-control-file" style="display: none;" type="file" accept="image/png, image/jpeg, image/, image/jpg, image/tiff">
