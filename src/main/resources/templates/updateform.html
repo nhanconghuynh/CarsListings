@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
     <style>
         .navbar-custom .nav-item.active .nav-link,
         .navbar-custom .nav-item:focus .nav-link,
@@ -24,7 +27,49 @@
         }
         span.form-error-text { color: red; }
         body { font-size: 116%;}
+
+        img {
+            max-width: 200px;
+            max-height: 200px;
+            width: auto;
+            height:auto;
+        }
+
+        .form-control:focus {
+            border-color: rgba(70, 145, 87, 0.82);
+            box-shadow: inset 0 1px 1px rgba(69, 92, 131, 0.15), 0 0 12px rgba(133, 207, 153, 0.6);
+        }
+
+        /*.custom-select:focus {*/
+        /*border-color: #bf7734;*/
+        /*box-shadow: inset 0 1px 1px rgba(67, 88, 125, 0.24), 0 0 12px rgba(255, 156, 41, 0.6);*/
+        /*}*/
+
+        select {
+                border-color: #bf0f23;
+                box-shadow: inset 0 1px 1px rgba(67, 88, 125, 0.24), 0 0 12px rgba(255, 64, 103, 0.6);
+        }
+
+        select:focus {
+            border-color: #bdbf34;
+            box-shadow: inset 0 1px 1px rgba(67, 88, 125, 0.24), 0 0 12px rgba(255, 241, 170, 0.6);
+        }
+
+        .popover{
+            z-index:100000000;
+        }
+
     </style>
+
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+        // $('[data-toggle="popover"]').popover({ container: ".modal-body" });
+
+
+    })
+</script>
+
 </head>
 <body>
 
@@ -45,7 +90,29 @@
         <b>Current Car Photo:</b>
         <img th:src="${car.carphoto}"  style="display:block;margin-left:auto;margin-right: auto;max-height:350px;max-width:350px;height:auto;width:auto;" />
         <br />
-        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#changePicModal" th:href="@{/updatepic/{pic}(pic=${car.carphoto})}">Change Picture</button>
+        <div id="fileInputGroup" class="input-group">
+            <!--<div class="input-group-append">-->
+
+
+
+            <div class="image-preview-input">
+                <span class=" btn btn-info btn-sm" onclick="$(this).parent().find('input[type=file]').click();">Change Picture</span>
+                <input id="displayFilename" type="text" class="form-control-sm image-preview-filename" disabled placeholder="[[${car.carphoto}]]">
+                <input id="custominputfile" name="file" class="form-control-file" style="display: none;" type="file" accept="image/png, image/jpeg, image/, image/jpg, image/tiff">
+                <button type="button" class="btn btn-light btn-sm image-preview-clear">Clear</button>
+                <img id="myImage" src="#" alt="No photo." style="display:none;max-height:200px;max-width:200px;height:auto;width:auto;"/>
+                <button id="previewImage" class="btn btn-success btn-sm" data-toggle="popover"  data-container=".modal-body" data-trigger="focus hover" data-html="true" title="Photo Preview" data-placement="right"
+                        data-content="No photo selected." type="button" >Image Preview</button>
+            </div>
+
+        </div><!-- /input-group image-preview [TO HERE]-->
+
+
+
+
+
+
+        <!--<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#changePicModal" th:href="@{/updatepic/{pic}(pic=${car.carphoto})}">Change Picture</button>-->
         <hr />
     </div>
 
@@ -60,7 +127,7 @@
     <!--<button id="image_alt" type="button">Select image</button>-->
 
 
-    <b>Category:</b> <select th:field="*{category}" class="float-right" >
+    <b>Category:</b> <select th:field="*{category}" class="form-control-sm float-right" >
 
     <option th:unless="${category.idnum == 1}" th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
     </option>
@@ -68,41 +135,43 @@
 
 </select><br /><br />
 
-    <b>Manufacturer:</b> <input class="float-right" type="text" th:field="*{manufacturer}" th:errorclass="form-field-error" /><br />
+    <b>Manufacturer:</b> <input class="form-control-sm float-right" type="text" th:field="*{manufacturer}" th:errorclass="form-field-error" /><br />
     <span class="form-error-text" th:if="${#fields.hasErrors('manufacturer')}"
           th:errors="*{manufacturer}"></span><br />
 
-    <b>Model: </b> <input class="float-right" type="text" th:field="*{carmodel}" th:errorclass="form-field-error" /><br />
+    <b>Model: </b> <input class="form-control-sm float-right" type="text" th:field="*{carmodel}" th:errorclass="form-field-error" /><br />
     <span class="form-error-text" th:if="${#fields.hasErrors('carmodel')}"
           th:errors="*{carmodel}"></span><br />
 
-    <b>Trim:</b> <input class="float-right" type="text" th:field="*{cartrim}" th:errorclass="form-field-error" /><br />
+    <b>Trim:</b> <input class="form-control-sm float-right" type="text" th:field="*{cartrim}" th:errorclass="form-field-error" /><br />
     <span class="form-error-text" th:if="${#fields.hasErrors('cartrim')}"
           th:errors="*{carTrim}"></span><br />
 
-    <b>Year:</b> <input class="float-right" type="text" th:field="*{year}" th:errorclass="form-field-error" /><br />
+    <b>Year:</b> <input class="form-control-sm float-right" type="text" th:field="*{year}" th:errorclass="form-field-error" /><br />
     <span class="form-error-text" th:if="${#fields.hasErrors('year')}"
           th:errors="*{year}"></span><br />
 
-    <b>Mileage:</b> <input class="float-right" type="text" th:field="*{mileage}" th:errorclass="form-field-error" /><br />
+    <b>Mileage:</b> <input class="form-control-sm float-right" type="text" th:field="*{mileage}" th:errorclass="form-field-error" /><br />
     <span class="form-error-text" th:if="${#fields.hasErrors('mileage')}"
           th:errors="*{mileage}"></span><br />
 
-    <b>Color:</b> <input class="float-right" type="text" th:field="*{color}" th:errorclass="form-field-error" /><br />
+    <b>Color:</b> <input class="form-control-sm float-right" type="text" th:field="*{color}" th:errorclass="form-field-error" /><br />
     <span class="form-error-text" th:if="${#fields.hasErrors('color')}"
           th:errors="*{color}"></span><br />
 
     <b>Listing Price:</b>
     <!--<input type="number" step="0.01" th:field="*{price}" />-->
-    <input class="float-right" type="number"  th:field="*{price}" placeholder="0.00" min="1.00" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" /><br />
+    <span class="float-right">$
+    <input class="form-control-sm" type="number" th:field="*{price}" placeholder="0.00" min="1.01" step="0.01" pattern="^\d+(?:\.\d{1,2})?$" /><br />
+    </span>
     <span th:if="${#fields.hasErrors('price')}"
-          th:errors="*{price}"></span><br />
+          th:errors="*{price}"></span><br /><br />
 
-    <b>Description:</b> <textarea class="float-right" rows=1 style="height:auto; width:100%;" th:field="*{description}" th:errorclass="form-field-error" />
+    <b>Description:</b> <textarea class="form-control-sm float-right" rows=1 style="height:auto; width:100%;" th:field="*{description}" th:errorclass="form-field-error" />
     <span class="text text-danger" th:if="${#fields.hasErrors('description')}"
           th:errors="*{description}"></span><br /><br /><br />
 
-    <b>Features:</b> <textarea rows=2 style="height:auto; width:100%;" th:field="*{features}" th:errorclass="form-field-error" />
+    <b>Features:</b> <textarea class="form-control-sm" rows=2 style="height:auto; width:100%;" th:field="*{features}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('features')}"
           th:errors="*{features}"></span>
 
@@ -112,6 +181,64 @@
     </div>
 </form>
 
-</div>
+    <script>
+
+
+        $(function() {
+            // Clear event
+            $('.image-preview-clear').click(function(){
+                // $('.image-preview').attr("data-content","").popover("hide");
+                $('#previewImage').attr("data-content","").popover("hide");
+                $('#myImage').attr('src', "#");
+                $('.image-preview-filename').val("No photo chosen.");
+                // $('.image-preview-clear').hide();
+                $('.image-preview-input input:file').val("");
+                // $(".image-preview-input-title").text("Browse");
+            });
+            // Create the preview image
+            $(".image-preview-input input:file").change(function (event) {
+                // var img = $('<img/>', {
+                //     id: 'dynamic'
+                //     height: auto,
+                //     width: 200
+                // });
+                var file = this.files[0];
+                var fieldVal = $(this).val();
+                var reader = new FileReader();
+                // Set preview image into the popover data-content
+                reader.onload = function (e) {
+                    // $(".image-preview-input-title").text("Change");
+                    // $(".image-preview-clear").show();
+                    $(".image-preview-filename").val(file.name);
+
+
+                    $('#myImage').attr('src', e.target.result);
+                    $('#mytestImage').attr('src', e.target.result);
+                    // $(".image-preview").popover("show");
+                    // $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+
+                    // document.getElementById("#displayFilename").value = this.value;
+
+                    // $('#previewImage').popover("update");
+                    $("#previewImage").attr("data-content", $('#myImage')[0].outerHTML).popover("show");
+
+                }
+
+                if (!event.target.files[0]) {
+                    $('#myImage').attr('src', "#");
+                    $('#previewImage').attr("data-content", "").popover("hide");
+                    $('.image-preview-filename').val("No file chosen.");
+                }
+
+                if (event.target.files[0]) {
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+
+    </script>
+</div>  <!-- modal body -->
+
+
 </body>
 </html>

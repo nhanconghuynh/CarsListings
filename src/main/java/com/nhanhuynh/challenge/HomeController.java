@@ -215,8 +215,10 @@ public class HomeController {
 
     @RequestMapping("/update/{id}")
     public String updateCar(@PathVariable("id") long id , Model model){
+        carRepository.findById(id).get().setPrice(carRepository.findById(id).get().getPrice()+0.99);
         model.addAttribute("car", carRepository.findById(id).get());
         model.addAttribute("categories", categoryRepository.findAll());
+
         return "updateform";
     }
 
@@ -224,7 +226,7 @@ public class HomeController {
     public String updatecarPhoto(@PathVariable("pic") String pic, Car car, Model model){
         model.addAttribute("car", carRepository.findById(car.getId()).get());
         model.addAttribute("categories", categoryRepository.findAll());
-        return "updateform";
+        return "updatepic";
     }
 
 
