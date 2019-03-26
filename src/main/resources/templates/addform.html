@@ -36,15 +36,18 @@
     }
     span.form-error-text { color: red; }
     body { font-size: 116%;}
-        form  { display: table;  margin: 0 auto;   }
 
-        p     { display: table-row;  }
+        /*form  { display: table;  margin: 0 auto;   }*/
 
-        label { display: table-cell; font-weight: bold; }
+        /*p     { display: table-row;  }*/
+
+        /*label { display: table-cell; font-weight: bold; }*/
+
+        label { font-weight: bold; }
 
         /*select { display: table-cell;}*/
 
-        input { display: table-cell;}
+        /*input { display: table-cell;}*/
 
         img {
             max-width: 200px;
@@ -53,15 +56,15 @@
             height:auto;
         }
 
-        .form-control:focus {
-            border-color: rgba(70, 145, 87, 0.82);
-            box-shadow: inset 0 1px 1px rgba(69, 92, 131, 0.15), 0 0 12px rgba(133, 207, 153, 0.6);
-        }
+        /*.form-control:focus {*/
+            /*border-color: rgba(70, 145, 87, 0.82);*/
+            /*box-shadow: inset 0 1px 1px rgba(69, 92, 131, 0.15), 0 0 12px rgba(133, 207, 153, 0.6);*/
+        /*}*/
 
-        select {
-            border-color: #bf0f23;
-            box-shadow: inset 0 1px 1px rgba(67, 88, 125, 0.24), 0 0 12px rgba(255, 64, 103, 0.6);
-        }
+        /*select {*/
+            /*border-color: #bf0f23;*/
+            /*box-shadow: inset 0 1px 1px rgba(67, 88, 125, 0.24), 0 0 12px rgba(255, 64, 103, 0.6);*/
+        /*}*/
 
         .custom-select:focus {
         border-color: #bf7734;
@@ -93,6 +96,8 @@
             /*padding-left: 5px;*/
             /*display: block;*/
         /*}*/
+
+
 
     </style>
 
@@ -172,13 +177,16 @@
 <body>
 <div th:replace="base :: navlinks"></div>
 
-<form action="#" th:action="@{/addprocess}" th:object="${car}" method="post"
+
+<form name="add_car_form" id='add_car_form'
+      action="#" th:action="@{/addprocess}" th:object="${car}" method="post"
       enctype="multipart/form-data" style="font-size:85%;" >
 
     <input type="hidden" th:field="*{id}" />
 
-
-    <div class="form-group">
+    <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-8 offset-md-1" >
 
         <div id="fileInputGroup" class="input-group">
 
@@ -189,103 +197,154 @@
                     <span class=" btn btn-outline-primary" onclick="$(this).parent().find('input[type=file]').click();">Choose Car Photo</span>
                     <input id="custominputfile" name="file" class="form-control-file" style="display: none;" type="file" accept="image/png, image/jpeg, image/, image/jpg, image/tiff">
                     <img id="myImage" src="#" alt="No photo." style="display:none;max-height:200px;max-width:200px;height:auto;width:auto;"/>
-                    <button id="previewImage" class="btn btn-outline-info" data-toggle="popover"  data-container="body" data-trigger="focus hover" data-html="true" title="Photo Preview" data-placement="bottom"
+                    <button id="previewImage" class="btn btn-outline-info" data-toggle="popover"  data-container="body" data-trigger="focus hover" data-html="true" title="Photo Preview" data-placement="right"
                             data-content="No photo selected." type="button" >Image Preview</button>
                 </div>
 
         </div><!-- /input-group image-preview [TO HERE]-->
                 <!--<div class="input-group-prepend">-->           <!--<div class="input-group-prepend">-->
-    <!--</div>  &lt;!&ndash; form group &ndash;&gt;-->
 
     <span  th:if="${message}">
         <h6 style="color: red" th:text="${message}"> </h6>
     </span>
 
     </div>
+    </div>
+
 
     <br />
 
+    <div class="col-md-6 offset-md-3 text-center">
+  <p>
 
-    <p>
-        <label>Category:</label> <select class="form-control" th:field="*{category}" >
-
+      <label>Category:</label> <select class="form-control" th:field="*{category}"
+                                       style="border-color: #bf0f23;
+                                       box-shadow: inset 0 1px 1px rgba(67, 88, 125, 0.24), 0 0 12px rgba(255, 64, 103, 0.6);" >
+      <option value="" selected hidden>Choose Car Category</option>
     <option th:unless="${category.idnum == 1}" th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}">
     </option>
 
     </select>
-    </p>
+
+  </p>
+    </div>
+
     <br />
 
-    <p>
-    <label>Manufacturer:  </label><input class="form-control" type="text" th:field="*{manufacturer}" placeholder="Name of Manufacturer" th:errorclass="form-field-error" />
+    <div class="row">
+        <div class="form-group col-md-3 offset-md-2">
+    <label for="manufacturer">Manufacturer:  </label><input id ="manufacturer" class="form-control" type="text" th:field="*{manufacturer}" placeholder="Ex: Honda, Toyota, Ford" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('manufacturer')}"
-          th:errors="*{manufacturer}"></span> </p> <br />
+          th:errors="*{manufacturer}"></span>
+        </div>
 
-    <p>
-    <label>Model:</label> <input class="form-control" type="text" th:field="*{carmodel}" th:errorclass="form-field-error" />
+
+
+        <div class="form-group col-md-3">
+    <label for="model">Model:</label> <input id="model" class="form-control" type="text" th:field="*{carmodel}" placeholder="Ex: Accord, Camry, Fusion"  th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('carmodel')}"
-          th:errors="*{carmodel}"></span></p><br />
+          th:errors="*{carmodel}"></span>
+        </div>
 
-    <p>
-    <label>Trim:</label> <input class="form-control" type="text" th:field="*{cartrim}" th:errorclass="form-field-error" />
+        <div class="form-group col-md-2 text-center">
+    <label>Trim:</label> <input class="form-control" type="text" th:field="*{cartrim}" placeholder="Ex: LE, XLE, SE" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('cartrim')}"
-          th:errors="*{carTrim}"></span></p><br />
+          th:errors="*{carTrim}"></span>
+        </div>
+    </div>
+        <br />
 
-    <p>
-    <label>Year:</label> <input class="form-control" type="text" th:field="*{year}" th:errorclass="form-field-error" />
-    <span class="form-error-text" th:if="${#fields.hasErrors('year')}"
-          th:errors="*{year}"></span></p><br />
+    <div class="row">
+        <div class="form-group col-md-2 offset-md-2 text-center">
 
-    <p>
-    <label>Mileage:</label> <input class="form-control" type="text" th:field="*{mileage}" th:errorclass="form-field-error" />
+    <label>Year Made:</label>
+            <select class="form-control" th:field="*{year}" style="text-indent: 25px;">
+                <!--<option value="" selected hidden>Select Year Made</option>-->
+                <option th:each="i : ${#numbers.sequence(1980, 2019)}" th:value="${i}" th:text="${i}"></option>
+            </select>
+
+    <!--<input class="form-control" type="text" th:field="*{year}" th:errorclass="form-field-error" />-->
+    <!--<span class="form-error-text" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>-->
+        </div>
+
+            <div class="form-group col-md-3 text-center">
+    <label>Mileage:</label> <input class="form-control" type="text" th:field="*{mileage}" style="text-align: right" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('mileage')}"
-          th:errors="*{mileage}"></span></p><br />
+          th:errors="*{mileage}"></span>
+            </div>
 
-    <p>
+
+        <div class="form-group col-md-3 text-center">
     <label>Color:</label>  <input class="form-control" type="text" th:field="*{color}" th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('color')}"
-          th:errors="*{color}"></span></p><br />
+          th:errors="*{color}"></span>
+        </div>
+    </div>
 
-    <p>
-    <label>Listing Price:</label>
-    <!--<div class="input-group">-->
-        <!--<div class="input-group-prepend">-->
-        <!--<span class="input-group-text">$</span>-->
-        <!--</div>-->
-        <!--<div th:if="${price}">-->
-        <span>$
-        <input class="form-control" type="text" th:field="*{price}" placeholder="0.00" step="0.01" style="text-align: right"  />
-        </span>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-md-4 offset-md-3 text-center">
+        <label>Listing Price:</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+            </div>
+
+            <input class="form-control" type="text" th:field="*{price}" placeholder="0.00" step="0.01"
+                   style="text-align: right; border-color: rgba(70, 145, 87, 0.82); box-shadow: inset 0 1px 1px rgba(69, 92, 131, 0.15), 0 0 12px rgba(133, 207, 153, 0.6);"/>
+
         <!--</div>-->
 
         <!--<div th:unless="${price}">-->
         <!--<input class="form-control" type="text" placeholder="0.00" step="0.01"  />-->
         <!--</div>-->
 
-        <span class="text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+            <span class="text text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
 
-    </div>
-    </p>
-    <br />
+          </div>
 
+        </div>
+
+  </div>
+
+    <br /> <br />
+
+    <div class="col-md-8 offset-md-2 text-center" >
     <p>
-    <label>Short Description:  &nbsp;  </label> <textarea rows=1 style="height:auto; width:100%;" th:field="*{description}" th:errorclass="form-field-error" />
+    <label>Short Description:  &nbsp;  </label> <textarea class="form-control" rows=1 style="height:auto; width:100%;" th:field="*{description}"
+                                                          placeholder="Ex: Like New! Fully Loaded." th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('description')}"
           th:errors="*{description}"></span></p><br />
 
+    </div>
+
+    <div class="col-md-8 offset-md-2 text-center" >
     <p>
-    <label>Features:</label> <textarea rows=2 style="height:auto; width:100%;" th:field="*{features}" th:errorclass="form-field-error" />
+    <label>Features:</label> <textarea class="form-control" rows=2 style="height:auto; width:100%;" th:field="*{features}"
+                                       placeholder="Ex: GPS Navigation. Rear DVD Entertainment.  &quot;18&quot wheels." th:errorclass="form-field-error" />
     <span class="form-error-text" th:if="${#fields.hasErrors('features')}"
           th:errors="*{features}"></span></p><br />
 
-    <p></p> <label></label>
-    <span style="display:inline-block;">
-    &nbsp;
+    </div>
+
+    <div class="col-md-8 offset-md-2 text-center" >
     <input class="btn btn-light"   style="text-align: center; margin: auto; width:100px" type="reset" value="Reset" /> &nbsp; &nbsp; &nbsp;
     <input class="btn btn-primary" style="text-align: center; margin: auto; width:100px"  type="submit" value="Submit" />
-    </span>
+    </div>
+
+
+    <!--<p></p> <label></label>-->
+    <!--<span style="display:inline-block;">-->
+    <!--&nbsp;-->
+    <!--<input class="btn btn-light"   style="text-align: center; margin: auto; width:100px" type="reset" value="Reset" /> &nbsp; &nbsp; &nbsp;-->
+    <!--<input class="btn btn-primary" style="text-align: center; margin: auto; width:100px"  type="submit" value="Submit" />-->
+    <!--</span>-->
 
 </form>
+
+
 <br /> <hr />
 
     <div th:replace="base :: modal"></div>
