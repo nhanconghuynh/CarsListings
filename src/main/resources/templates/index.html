@@ -144,12 +144,17 @@
 
     </style>
 
-<script>
-    $(".myBox").click(function() {
-        window.location = $(this).find("a").attr("href");
-        return false;
-    });
-</script>
+<!--<script>-->
+    <!--$(".myBox").click(function() {-->
+        <!--window.location = $(this).find("a").attr("href");-->
+        <!--return false;-->
+    <!--});-->
+    <!--$(document).ready(() => {-->
+    <!--$(document.body).on('click', '.card[data-clickable=true]', (e) => {-->
+    <!--var href = $(e.currentTarget).data('href');-->
+    <!--window.location = href;-->
+    <!--});-->
+    <!--});-->
 
 </head>
 <body>
@@ -184,52 +189,44 @@
 <th:block th:each="car : ${recentcarsadded}">
   <div class="card-group" style="width: 13rem; max-height:230px;overflow:hidden; text-align:center;display:inline-block;">
       <!--<div class="card-group" style="width: 13rem; max-height:300px;overflow:auto; text-align:center;display:inline-block;">-->
-    <div class="card myBox" >
-        <a data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}" />
+    <a data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}" />
+      <div class="card" >
+
         <div class="shadow p-3 mb-1 bg-white rounded">
             <div class="card-image">
                     <!--<span class="card-notify-add">&nbsp;Just&nbsp; Added</span>-->
                 <span class="card-pic-new">
                       <img src="https://res.cloudinary.com/dg89xpg9o/image/upload/v1553574072/Challenge6_CarsListing/new-sticker.png"
                            style="border-radius:.30rem; max-width:50%;max-height:50px;width:auto;height:auto;" />
-                    <!--<img src="C:\Users\daddy\IdeaProjects\Challenge6_CarsListing\src\main\resources\static\img\new-sticker.png"-->
-                         <!--style="border-radius:.30rem; max-width:20%;max-height:50px;width:auto;height:auto;" />-->
                 </span>
             </div>
             <div class="view overlay">
-                <a data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}" >
+                <!--<a data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}" >-->
                     <div th:if="${car.carphoto} != null">
                     <img class="card-img-top" th:src="${car.carphoto}"
-                         style="border-radius:.60rem; max-width:90%;max-height:80px;width:auto;height:auto;">
+                         style="border-radius:.60rem; max-width:100%;max-height:80px;width:auto;height:auto;">
                     <!--<div class="mask rgba-white-slight"></div>-->
                     </div>
                     <div th:if="${car.carphoto} == null">
                         <img class="card-img-top" src="https://res.cloudinary.com/dg89xpg9o/image/upload/v1552467251/Challenge6_CarsListing/logo.png"
-                             style="border-radius:.60rem; max-width:90%;max-height:61px;width:auto;height:auto;">
+                             style="border-radius:.60rem; max-width:80%;max-height:78px;width:auto;height:auto;">
                         <!--<div class="mask rgba-white-slight"></div>-->
                     </div>
-                </a>
+                <!--</a>-->
             </div>
             <div class="card-body">
-                <!--<h5 class="card-title mb-3 text-center">[[${car.year}]] [[${car.manufacturer}]] [[${car.carmodel}]] [[${car.cartrim}]] </h5>-->
-                <!--<h6 class="card-subtitle mb-3 text-center">Only $[[${#numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}]] !!! </h6>-->
-                <!--<h6 class="card-subtitle mb-2 text-muted text-center">[[${car.mileage}]] miles</h6>-->
-                <p class="card-text" style="font-size:70%;">[[${car.year}]] [[${car.color}]] [[${car.manufacturer}]] [[${car.carmodel}]] [[${car.cartrim}]]
-                <span class="card-text text-muted text-center" style="font-size:70%;">[[${car.mileage}]] miles</span>
+                <p class="card-text" style="font-size:70%;">[[${car.year}]] [[${car.color}]] <br /> [[${car.manufacturer}]] [[${car.carmodel}]] [[${car.cartrim}]]
+                <br /> <span class="card-text text-muted text-center" style="font-size:90%;">[[${car.mileage}]] miles</span>
                     <br /> <b>$[[${#numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}]]</b>
                 </p>
-                <!--<div class="card-text" style="font-size:70%;"> $[[${#numbers.formatDecimal(car.price, 0, 'COMMA', 2, 'POINT')}]] </div>-->
-
-                <!--<a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#modifyCarModal" th:href="@{/update/{id}(id=${car.id})}">Update</a>-->
-                <!--<button type="button" class="btn btn-primary btn-sm" th:onclick="'javascript:openShowDetails(\'' + ${car.id} +'\');'">Details</button>-->
-                <!--<a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}">Details</a>-->
-                <!--<a class="btn btn-primary btn-sm" role="button" data-toggle="modal" data-target="#deleteCarModal" th:href="@{/delete/{id}(id=${car.id})}">Delete</a>-->
 
             </div>
 
         </div>
 
     </div>
+
+  </a>
   </div>
 
 </th:block>
