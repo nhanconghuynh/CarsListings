@@ -50,16 +50,20 @@ public class HomeController {
         List<Car> recentmodifiedcarlist = new ArrayList<>();
 
         for(Car car: carRepository.findAll()) {
-            if (car.isRecentadd())
+//            if (car.isRecentadd())
                 recentaddcarlist.add(car);
             if (car.isRecentmodified())
                 recentmodifiedcarlist.add(car);
+
         }
+
+
 
         if (recentaddcarlist.isEmpty())
             model.addAttribute("recentcarsaddedmsg", "There are currently no recently added car listing.");
         else
-            model.addAttribute("recentcarsadded", recentaddcarlist);
+          model.addAttribute("recentcarsadded", recentaddcarlist);
+
 
         if (recentmodifiedcarlist.isEmpty())
             model.addAttribute("recentcarsmodifiedmsg", "There are currently no recently updated/modified car listing.");
