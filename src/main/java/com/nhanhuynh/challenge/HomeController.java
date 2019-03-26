@@ -50,7 +50,7 @@ public class HomeController {
         List<Car> recentmodifiedcarlist = new ArrayList<>();
 
         for(Car car: carRepository.findAll()) {
-//            if (car.isRecentadd())
+            if (car.isRecentadd())
                 recentaddcarlist.add(car);
             if (car.isRecentmodified())
                 recentmodifiedcarlist.add(car);
