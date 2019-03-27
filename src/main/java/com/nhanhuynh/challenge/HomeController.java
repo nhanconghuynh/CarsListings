@@ -162,23 +162,23 @@ public class HomeController {
         return "deletecategoryform";
     }
 
-    @RequestMapping("/deletecategoryconfirm/{id}")
-    public String deleteCategoryConfirm(@PathVariable("id") long id , Model model){
-        model.addAttribute("categories", categoryRepository.findAll());
-
-
-//        Category category = new Category();
-//        category.setId(id);
-//        for(Category cat: categoryRepository.findAll()) {
-//            if (cat.getId() == id)
-//                category = cat;
-//        }
-        model.addAttribute("category", categoryRepository.findById(id));
-        return "deletecategoryconfirmation";
+    @PostMapping("/deletecategoryprocess")
+    public void deletecategoryprocess(@RequestParam("categoryid") long id, Model model) {
+        model.addAttribute("car", carRepository.findById(id).get());
+//        model.addAttribute("categories", categoryRepository.findAll());
     }
 
-    @RequestMapping("/deletecategoryprocess/{id}")
-    public String deletecategoryprocess(@PathVariable("id") long id, Car car, Model model, RedirectAttributes redirectAttributes) {
+    @RequestMapping("/deletecategoryconfirm/{id}")
+    public String deletecategoryconfirm(@PathVariable("id") long id, Model model) {
+        model.addAttribute("car", carRepository.findById(id).get());
+//        model.addAttribute("categories", categoryRepository.findAll());
+        return "/deletecategoryconfirmation}";
+    }
+
+
+
+    @RequestMapping("/deletecategoryconfirmprocess/{id}")
+    public String deletecategoryconfirmprocess(@PathVariable("id") long id, Car car, Model model, RedirectAttributes redirectAttributes) {
         Car carset = new Car();
         Category category = car.getCategory();
         // clear all cars in category

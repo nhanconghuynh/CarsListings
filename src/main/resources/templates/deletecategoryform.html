@@ -47,13 +47,14 @@
         <b>Choose the Category to delete: </b><br /> <br />
 
             <!--<select th:field="*{category}" >-->
+        <form action="#" th:action="@{/deletecategoryprocess}" th:object="${category}" method="post">
 
-
-            <select id="category" name="category" >
+            <select id="categoryid" name="categoryid" class="form-control" th:field="*{category}">
 
             <option th:unless="${category.idnum == 1}" th:each="category : ${categories}" th:value="${category.id}" th:text="${category.type}"> </option>
 
-            </select> <br /> <br />
+            </select>
+        <br /> <br />
 
         <!--<p>-->
             <!--<label>Category:</label> <select th:field="*{category}" >-->
@@ -68,10 +69,12 @@
 
         <!--Modal footer -->
         <div class="modal-footer justify-content-between">
-            <button type="button" class="btn btn-light mr-auto" data-dismiss="modal" style="text-align: center; width:75px">Cancel</button>
-            <a style="text-align: center; width:75px" class="btn btn-primary" role="button" data-toggle="modal" data-target="#deleteCategoryConfirmModal" href="#" data-dismiss="modal">Submit</a>
+            <!--<button type="button" class="btn btn-light mr-auto" data-dismiss="modal" style="text-align: center; width:75px">Cancel</button>-->
+            <!--<a style="text-align: center; width:75px" class="btn btn-primary" role="button" data-toggle="modal" data-target="#deleteCategoryConfirmModal" href="#" data-dismiss="modal">Submit</a>-->
+            <button type="button" class="btn btn-light" data-dismiss="modal" style="text-align: center; margin: auto; width:75px">Cancel</button> &nbsp; &nbsp;
+            <input type="submit" class="btn btn-primary" data-toggle="modal" data-target="#deleteCategoryConfirmModal" data-dismiss="modal" th:href="@{/deletecategoryconfirm/{id}(id=${category.id})} value="Submit" />
         </div>
-
+        </form>
     </div>
 <!--</div>-->
 

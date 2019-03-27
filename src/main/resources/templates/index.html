@@ -8,7 +8,7 @@
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!--<link rel="stylesheet" href="/../resources/static/css/custom.css" type=text/css>-->
+    <link rel="stylesheet" href="custom.css" type=text/css>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -156,7 +156,6 @@
            border-radius: 3px;
            transition: all 0.2s ease;
        }
-
     </style>
 
 <!--<script>-->
@@ -330,11 +329,18 @@
               </div>
               <div class="view overlay">
                 <a data-toggle="modal" data-target="#detailsModal" th:href="@{/details/{id}(id=${car.id})}" >
-                <img class="card-img-top" th:src="${car.carphoto}" alt="No pic available.  Please add pic."
+                    <div th:if="${car.carphoto} != null">
+                    <img class="card-img-top" th:src="${car.carphoto}" alt="No pic available.  Please add pic."
                       style="border-radius:.60rem; max-width:100%;height:190px;width:auto;">
                     <div class="mask rgba-white-slight"></div>
+                    </div>
+                    <div th:if="${car.carphoto} == null">
+                        <img class="card-img-top" src="https://res.cloudinary.com/dg89xpg9o/image/upload/v1552467251/Challenge6_CarsListing/logo.png"
+                             style="border-radius:.60rem; max-width:100%;max-height:165px;width:auto;height:auto;">
+                        <!--<div class="mask rgba-white-slight"></div>-->
+                    </div>
                 </a>
-            </div>
+              </div>
 
               <div class="card-body">
                 <h5 class="card-title mb-3 text-center">[[${car.year}]] [[${car.manufacturer}]] [[${car.carmodel}]] [[${car.cartrim}]] </h5>
